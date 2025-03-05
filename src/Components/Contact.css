@@ -1,0 +1,92 @@
+.contact-container {
+    background: #0a192f;
+    min-height: 85vh;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 600px;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    color: #ccd6f6;
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    color: #8892b0;
+    font-size: 1.1rem;
+  }
+  
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .social-card {
+    background: #112240;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .social-card:hover {
+    border-color: #64ffda;
+    box-shadow: 0 10px 30px -15px rgba(100, 255, 218, 0.2);
+  }
+  
+  .social-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .social-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .social-name {
+    color: #ccd6f6;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .social-handle {
+    color: #64ffda;
+    font-size: 0.9rem;
+    word-break: break-all;
+  }
+  
+  @media (max-width: 768px) {
+    .social-grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .social-card {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .social-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
