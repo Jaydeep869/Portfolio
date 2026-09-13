@@ -109,7 +109,7 @@ export const OpenSourceSection: React.FC = () => {
   return (
     <section
       id="opensource"
-      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-4 sm:px-10 lg:px-14 xl:px-18 pt-16 sm:pt-28 lg:pt-32 pb-20 sm:pb-28 bg-black select-none overflow-x-hidden scroll-mt-16 sm:scroll-mt-24"
+      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-4 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-28 bg-black select-none overflow-x-hidden scroll-mt-24 mt-8 sm:mt-0"
     >
       {/* Full Width Container Identically Aligned to Experience Section */}
       <div className="max-w-[1650px] w-full mx-auto flex flex-col">
@@ -134,12 +134,12 @@ export const OpenSourceSection: React.FC = () => {
             {/* Table Header (flex-none) */}
             <div className="flex-none">
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
-                <TableHeader className="sticky top-0 z-20 bg-black/95 backdrop-blur-md border-b border-white/10">
-                  <TableRow className="border-b border-white/10 hover:bg-transparent">
-                    <TableHead className="w-[66%] sm:w-[80%] py-4 sm:py-5 px-3 sm:px-10 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                <TableHeader className="sticky top-0 z-20 bg-black/95 backdrop-blur-md border-b border-white/15">
+                  <TableRow className="border-b border-white/15 hover:bg-transparent">
+                    <TableHead className="w-[64%] sm:w-[78%] py-4 sm:py-5 px-3 sm:px-8 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Pull Request
                     </TableHead>
-                    <TableHead className="w-[34%] sm:w-[20%] py-4 sm:py-5 px-3 sm:px-10 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-[36%] sm:w-[22%] py-4 sm:py-5 px-3 sm:px-8 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Status
                     </TableHead>
                   </TableRow>
@@ -154,41 +154,44 @@ export const OpenSourceSection: React.FC = () => {
               onWheel={handleWheel}
               className="flex-1 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
-              <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0 [&_td]:border-white/[0.05] [&_tr:not(:last-child)_td]:border-b">
+              <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0 [&_td]:border-white/15 [&_tr:not(:last-child)_td]:border-b">
                 <TableBody>
                   {prsList.map((pr) => (
                     <TableRow
                       key={pr.id}
-                      className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.05] group"
+                      className="hover:bg-white/[0.03] transition-colors border-b border-white/15 group"
                     >
-                      {/* Pull Request Title (Thin, Larger, Elegant Font with mobile padding) */}
-                      <TableCell className="w-[66%] sm:w-[80%] py-5 sm:py-9 px-3 sm:px-10 pr-2 sm:pr-6 font-normal align-middle">
+                      {/* Pull Request Title (Clean Thin Inter Typography) */}
+                      <TableCell className="w-[64%] sm:w-[78%] py-5 sm:py-8 px-3 sm:px-8 pr-2 sm:pr-6 font-normal align-middle border-b border-white/15">
                         <a
                           href={pr.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[15px] sm:text-xl lg:text-[22px] font-light text-slate-100 group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-snug tracking-tight block"
+                          className="text-base sm:text-lg lg:text-[20px] font-light text-slate-100 group-hover:text-[#9ab4c4] transition-colors font-['Inter',sans-serif] leading-relaxed tracking-normal block"
                           title={pr.title}
                         >
                           {pr.title}
                         </a>
                       </TableCell>
 
-                      {/* Status (Interactive Merged Button with mobile optimization) */}
-                      <TableCell className="w-[34%] sm:w-[20%] py-5 sm:py-9 px-3 sm:px-10 text-right align-middle">
-                        <div className="flex items-center justify-end">
+                      {/* Status & Separate External Link */}
+                      <TableCell className="w-[36%] sm:w-[22%] py-5 sm:py-8 px-3 sm:px-8 text-right align-middle border-b border-white/15">
+                        <div className="flex items-center justify-end gap-2 sm:gap-3">
+                          {/* Merged Status Indicator (Btn/Badge Type) */}
+                          <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-[11px] sm:text-xs font-mono font-medium shrink-0">
+                            <GitMerge className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                            <span>merged</span>
+                          </div>
+
+                          {/* Separate External Link Button */}
                           <a
                             href={pr.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-purple-950/35 hover:bg-purple-900/60 active:scale-95 border border-purple-500/30 hover:border-purple-400/70 text-purple-200 hover:text-white transition-all duration-200 shadow-sm shadow-purple-950/40 hover:shadow-purple-900/50 group/btn shrink-0 cursor-pointer"
-                            title="View merged pull request on GitHub"
+                            className="p-1.5 sm:p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 text-slate-400 hover:text-white transition-all shrink-0 cursor-pointer"
+                            title="Open PR on GitHub"
                           >
-                            <GitMerge className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 group-hover/btn:text-purple-300 group-hover/btn:rotate-12 transition-transform duration-200 shrink-0" />
-                            <span className="font-mono text-[11px] sm:text-[13px] font-medium tracking-wide">
-                              merged
-                            </span>
-                            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400/60 group-hover/btn:text-purple-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-200 shrink-0" />
+                            <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                           </a>
                         </div>
                       </TableCell>
@@ -201,12 +204,12 @@ export const OpenSourceSection: React.FC = () => {
             {/* Table Footer (flex-none) */}
             <div className="flex-none">
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
-                <TableFooter className="sticky bottom-0 z-20 bg-black/95 backdrop-blur-md border-t border-white/10">
+                <TableFooter className="sticky bottom-0 z-20 bg-black/95 backdrop-blur-md border-t border-white/15">
                   <TableRow className="hover:bg-transparent">
-                    <TableCell className="w-[66%] sm:w-[80%] py-4 sm:py-5 px-3 sm:px-10 text-xs font-mono text-slate-400">
+                    <TableCell className="w-[64%] sm:w-[78%] py-4 sm:py-5 px-3 sm:px-8 text-xs font-mono text-slate-400">
                       Total Merged Contributions
                     </TableCell>
-                    <TableCell className="w-[34%] sm:w-[20%] text-right py-4 sm:py-5 px-3 sm:px-10 text-xs font-mono text-[#9ab4c4] font-semibold">
+                    <TableCell className="w-[36%] sm:w-[22%] text-right py-4 sm:py-5 px-3 sm:px-8 text-xs font-mono text-[#9ab4c4] font-semibold">
                       {prsList.length} Merged
                     </TableCell>
                   </TableRow>

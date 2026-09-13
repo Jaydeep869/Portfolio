@@ -226,7 +226,7 @@ export const ExperienceSection: React.FC = () => {
     <section
       id="experience"
       className={cn(
-        'w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-20 sm:pt-24 lg:pt-28 pb-16 sm:pb-28 bg-black select-none overflow-x-hidden'
+        'w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-20 sm:pt-24 lg:pt-28 pb-24 sm:pb-28 bg-black select-none overflow-x-hidden'
       )}
     >
       {/* Expanded Horizontal Width on PC to Fill Space Nicely Between Sidebars */}
@@ -272,7 +272,7 @@ export const ExperienceSection: React.FC = () => {
 
         {/* Bottom Divider */}
         <div className="hidden md:block w-screen relative left-1/2 -translate-x-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
-        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mt-6 mb-2" />
+        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mt-8 mb-4" />
       </div>
     </section>
   );
