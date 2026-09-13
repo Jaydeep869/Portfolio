@@ -3,7 +3,6 @@ import {
   Mountain, 
   User, 
   Briefcase, 
-  GitPullRequest,
   FolderGit2, 
   Cpu, 
   Mail 
@@ -20,7 +19,6 @@ const navItems: DockItem[] = [
   { label: 'Summit', href: '#hero', icon: <Mountain className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'About', href: '#about', icon: <User className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Experience', href: '#experience', icon: <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { label: 'Open Source', href: '#opensource', icon: <GitPullRequest className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Projects', href: '#projects', icon: <FolderGit2 className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Tech Stack', href: '#stack', icon: <Cpu className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Contact', href: '#contact', icon: <Mail className="w-4 h-4 sm:w-5 sm:h-5" /> },

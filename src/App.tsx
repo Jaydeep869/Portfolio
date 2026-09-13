@@ -4,7 +4,6 @@ import { SocialSidebars } from './components/SocialSidebars';
 import { ParallaxHero } from './components/ParallaxHero';
 import { AboutTransitionSection } from './components/AboutTransitionSection';
 import { ExperienceSection } from './components/ExperienceSection';
-import { OpenSourceSection } from './components/OpenSourceSection';
 import { ProjectCarousel } from './components/ProjectCarousel';
 import { TechStackMarquee } from './components/TechStackMarquee';
 import { ContactCards } from './components/ContactCards';
@@ -36,9 +35,6 @@ export default function App() {
 
         {/* 3. Centered Experience Section (Interactive Tabs & All-Internships Overview) */}
         <ExperienceSection />
-
-        {/* 3.5. Open Source Audit Log Timeline (CNCF & OpenSSF Merged PRs) */}
-        <OpenSourceSection />
 
         {/* 4. Featured Projects Horizontal Carousel (carousel-07 3D stacked deck) */}
         <ProjectCarousel />
