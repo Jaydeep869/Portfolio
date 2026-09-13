@@ -18,7 +18,7 @@ export const TechStackMarquee: React.FC = () => {
         {/* Title Positioned on Left (Matching Experience Section) */}
         <div className="w-full pb-8 sm:pb-12 text-left">
           <BlurReveal delay={0}>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-none font-['Syne',sans-serif]">
               STACK & CONTRIBUTIONS
             </h2>
           </BlurReveal>

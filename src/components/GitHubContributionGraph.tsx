@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, GitCommit, Flame } from 'lucide-react';
 import initialData from '../data/contributions.json';
 
 interface ContributionDay {
@@ -18,19 +17,24 @@ interface ContributionsData {
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const LEVEL_COLORS = [
-  'bg-[#161b22] border-white/[0.06]', // Level 0: Empty
-  'bg-[#0e4429] border-[#0e4429]/40', // Level 1
-  'bg-[#006d32] border-[#006d32]/50', // Level 2
-  'bg-[#26a641] border-[#26a641]/60 shadow-[0_0_6px_rgba(38,166,65,0.25)]', // Level 3
-  'bg-[#39d353] border-[#39d353]/70 shadow-[0_0_10px_rgba(57,211,83,0.45)]', // Level 4
+  'bg-[#161b22] border-[#21262d]', // Level 0: Empty
+  'bg-[#0e4429] border-[#0e4429]', // Level 1
+  'bg-[#006d32] border-[#006d32]', // Level 2
+  'bg-[#26a641] border-[#26a641]', // Level 3
+  'bg-[#39d353] border-[#39d353] shadow-[0_0_6px_rgba(57,211,83,0.35)]', // Level 4
 ];
+
+const GithubLogo = () => (
+  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+  </svg>
+);
 
 export const GitHubContributionGraph: React.FC = () => {
   const [data, setData] = useState<ContributionsData>(initialData as ContributionsData);
   const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
 
   useEffect(() => {
-    // Silently fetch fresh live data from GitHub contributions API in the background
     fetch('https://github-contributions-api.jogruber.de/v4/Jaydeep869?y=last')
       .then((res) => res.json())
       .then((json) => {
@@ -39,7 +43,7 @@ export const GitHubContributionGraph: React.FC = () => {
         }
       })
       .catch(() => {
-        // Fallback gracefully to bundled verified data
+        // Fallback gracefully
       });
   }, []);
 
@@ -61,7 +65,7 @@ export const GitHubContributionGraph: React.FC = () => {
     weeks.push(currentWeek);
   }
 
-  // Determine which column starts each month
+  // Month labels positioning
   const monthLabels: { weekIndex: number; name: string }[] = [];
   let lastMonth = '';
 
@@ -87,52 +91,36 @@ export const GitHubContributionGraph: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto p-6 sm:p-10 rounded-3xl bg-[#090e15]/95 border border-white/15 backdrop-blur-2xl shadow-[0_20px_70px_rgba(0,0,0,0.8)] flex flex-col">
-      {/* Header Info */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
-        <div className="space-y-2">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39d353] opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-[#39d353] shadow-[0_0_12px_#39d353]" />
-            </span>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-['Space_Grotesk',sans-serif] flex items-center gap-3">
-              <span>{totalContributions.toLocaleString()} Contributions</span>
-              <span className="hidden sm:inline-flex text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-[#39d353]/10 text-[#39d353] border border-[#39d353]/30">
-                Active Year
-              </span>
-            </h3>
-          </div>
-          <p className="text-xs sm:text-sm font-mono text-slate-400 flex items-center gap-2">
-            <span>@Jaydeep869</span>
-            <span>•</span>
-            <span className="text-emerald-400/90 flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5" /> High Activity
-            </span>
-            <span>•</span>
-            <span>Live GitHub Matrix</span>
-          </p>
+    <div className="w-full max-w-[1400px] mx-auto p-5 sm:p-7 rounded-lg bg-[#0d1117] border border-white/[0.08] shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col">
+      {/* Header Info: Clean Typography, Total count & GitHub button only */}
+      <div className="flex items-center justify-between gap-4 pb-5 border-b border-white/[0.07]">
+        <div className="flex items-baseline gap-2.5">
+          <span className="text-xl sm:text-2xl font-extrabold text-white font-['Syne',sans-serif] tracking-tight tabular-nums">
+            {totalContributions.toLocaleString()}
+          </span>
+          <span className="text-xs font-['Fira_Code',monospace] text-slate-400">
+            contributions in the last year
+          </span>
         </div>
 
-        {/* Profile Link */}
+        {/* Minimal GitHub Button */}
         <a
           href="https://github.com/Jaydeep869"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#39d353]/60 text-xs sm:text-sm font-mono text-slate-200 hover:text-white transition-all w-fit cursor-pointer group shadow-lg active:scale-95"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/20 text-xs font-['Fira_Code',monospace] text-slate-200 hover:text-white transition-all cursor-pointer group shrink-0"
         >
-          <GitCommit className="w-4 h-4 text-[#39d353]" />
-          <span>View GitHub Profile</span>
-          <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#39d353] transition-colors" />
+          <GithubLogo />
+          <span>GitHub</span>
         </a>
       </div>
 
-      {/* Main Grid Container (Big size on PC, smoothly scrollable on mobile) */}
-      <div className="pt-8 pb-4 w-full overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/10">
-        <div className="min-w-[850px] lg:min-w-full flex flex-col">
-          {/* Months Row */}
-          <div className="flex text-[11px] font-mono text-slate-400 mb-2 pl-9">
-            <div className="relative w-full h-5">
+      {/* Main Grid: Clean, Rectangular, No Oversized Hover */}
+      <div className="pt-6 pb-3 w-full overflow-x-auto [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10">
+        <div className="min-w-[840px] lg:min-w-full flex flex-col">
+          {/* Months Header */}
+          <div className="flex text-[10px] font-['Fira_Code',monospace] text-slate-500 mb-2 pl-7">
+            <div className="relative w-full h-4">
               {monthLabels.map((m, idx) => (
                 <span
                   key={idx}
@@ -148,18 +136,18 @@ export const GitHubContributionGraph: React.FC = () => {
           </div>
 
           {/* Days & Weeks Grid */}
-          <div className="flex gap-2.5">
-            {/* Days of Week Label */}
-            <div className="flex flex-col justify-between text-[10px] font-mono text-slate-500 py-0.5 select-none w-6 shrink-0">
+          <div className="flex gap-2">
+            {/* Days Column */}
+            <div className="flex flex-col justify-between text-[9px] font-['Fira_Code',monospace] text-slate-600 select-none w-5 shrink-0 py-0.5">
               <span>Mon</span>
               <span>Wed</span>
               <span>Fri</span>
             </div>
 
             {/* Weeks Columns */}
-            <div className="flex-1 flex gap-1.5 sm:gap-2 justify-between">
+            <div className="flex-1 flex gap-1 sm:gap-1.5 justify-between">
               {weeks.map((week, wIdx) => (
-                <div key={wIdx} className="flex flex-col gap-1.5 sm:gap-2 flex-1">
+                <div key={wIdx} className="flex flex-col gap-1 sm:gap-1.5 flex-1">
                   {week.map((day) => {
                     const isHovered = hoveredDay?.date === day.date;
                     const levelClass = LEVEL_COLORS[Math.min(day.level, 4)] || LEVEL_COLORS[0];
@@ -169,10 +157,10 @@ export const GitHubContributionGraph: React.FC = () => {
                         key={day.date}
                         onMouseEnter={() => setHoveredDay(day)}
                         onMouseLeave={() => setHoveredDay(null)}
-                        className={`aspect-square w-full rounded-[3.5px] border cursor-pointer transition-all duration-150 ${levelClass} ${
+                        className={`aspect-square w-full rounded-[2px] border cursor-pointer transition-all duration-75 ${levelClass} ${
                           isHovered
-                            ? 'scale-150 z-30 ring-2 ring-white shadow-[0_0_12px_rgba(57,211,83,0.8)]'
-                            : 'hover:scale-125 hover:z-20'
+                            ? 'ring-1 ring-white/90 brightness-125 z-10'
+                            : 'hover:brightness-110'
                         }`}
                       />
                     );
@@ -184,35 +172,31 @@ export const GitHubContributionGraph: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer Info: Tooltip Display & Legend */}
-      <div className="pt-6 mt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
-        {/* Dynamic Tooltip Bar */}
-        <div className="text-slate-300 min-h-[22px] flex items-center gap-2">
+      {/* Footer: Dynamic Tooltip Info (No placeholder text) & Legend */}
+      <div className="pt-4 mt-2 border-t border-white/[0.07] flex items-center justify-between gap-4 text-xs font-['Fira_Code',monospace] min-h-[38px]">
+        {/* Active hover info only, no filler text */}
+        <div className="text-slate-300">
           {hoveredDay ? (
-            <>
-              <span className="w-2 h-2 rounded-full bg-[#39d353]" />
-              <span className="font-semibold text-white">
+            <span className="flex items-center gap-1.5 text-[11px]">
+              <span className="text-emerald-400 font-medium">
                 {hoveredDay.count} {hoveredDay.count === 1 ? 'contribution' : 'contributions'}
               </span>
               <span className="text-slate-500">on</span>
               <span className="text-slate-300">{formatDate(hoveredDay.date)}</span>
-            </>
-          ) : (
-            <span className="text-slate-400">
-              Hover over any square to view daily commit activity.
             </span>
+          ) : (
+            <span className="text-transparent select-none">idle</span>
           )}
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-2 text-slate-400 shrink-0">
+        <div className="flex items-center gap-1.5 text-[10px] text-slate-500 shrink-0">
           <span>Less</span>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             {LEVEL_COLORS.map((colClass, idx) => (
               <span
                 key={idx}
-                className={`w-3.5 h-3.5 rounded-[3px] border ${colClass}`}
-                title={`Level ${idx}`}
+                className={`w-2.5 h-2.5 rounded-[2px] border ${colClass}`}
               />
             ))}
           </div>
