@@ -226,7 +226,7 @@ export const ExperienceSection: React.FC = () => {
     <section
       id="experience"
       className={cn(
-        'w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-20 sm:pt-24 lg:pt-28 pb-24 sm:pb-28 bg-black select-none overflow-x-hidden'
+        'w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-20 sm:pt-24 lg:pt-28 pb-32 sm:pb-28 bg-black select-none overflow-x-hidden'
       )}
     >
       {/* Expanded Horizontal Width on PC to Fill Space Nicely Between Sidebars */}

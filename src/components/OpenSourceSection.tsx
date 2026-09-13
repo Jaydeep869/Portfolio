@@ -109,7 +109,7 @@ export const OpenSourceSection: React.FC = () => {
   return (
     <section
       id="opensource"
-      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-4 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-28 bg-black select-none overflow-x-hidden scroll-mt-24 mt-8 sm:mt-0"
+      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-4 sm:px-10 lg:px-14 xl:px-18 pt-36 sm:pt-28 lg:pt-32 pb-24 sm:pb-28 bg-black select-none overflow-x-hidden scroll-mt-0 mt-16 sm:mt-0"
     >
       {/* Full Width Container Identically Aligned to Experience Section */}
       <div className="max-w-[1650px] w-full mx-auto flex flex-col">

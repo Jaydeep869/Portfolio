@@ -32,14 +32,16 @@ export const Dock: React.FC<{ className?: string }> = ({ className }) => {
 
   const handleItemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     const lenis = (window as unknown as { __lenis?: { scrollTo: (t: string | Element, opts?: { duration?: number }) => void } }).__lenis;
-    if (lenis) {
+
+    if (lenis && !isMobile) {
       lenis.scrollTo(href, { duration: 1.2 });
     } else {
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
