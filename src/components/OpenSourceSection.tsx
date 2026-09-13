@@ -4,6 +4,7 @@ import {
   ExternalLink, 
   Search, 
   X, 
+  RefreshCw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BlurReveal } from './ui/blur-reveal';
@@ -29,12 +30,13 @@ const projectFilterOptions = [
 ];
 
 export const OpenSourceSection: React.FC = () => {
-  // Ensure both fmcw PRs are strictly excluded
+  // Exclude both fmcw PRs
   const initialPRs = useMemo(() => {
     return allMergedPRs.filter(p => !p.repo.toLowerCase().includes('fmcw'));
   }, []);
 
   const [prsList, setPrsList] = useState<MergedPR[]>(initialPRs);
+  const [isLiveSyncing, setIsLiveSyncing] = useState<boolean>(false);
 
   // Filter & Search states
   const [selectedProject, setSelectedProject] = useState<string>('all');
@@ -47,6 +49,7 @@ export const OpenSourceSection: React.FC = () => {
     let isMounted = true;
     const fetchLivePRs = async () => {
       try {
+        setIsLiveSyncing(true);
         const res = await fetch(
           'https://api.github.com/search/issues?q=author:Jaydeep869+type:pr+is:merged&sort=created&order=desc&per_page=100',
           { headers: { Accept: 'application/vnd.github.v3+json' } }
@@ -110,6 +113,8 @@ export const OpenSourceSection: React.FC = () => {
         }
       } catch (err) {
         console.warn('GitHub live sync error:', err);
+      } finally {
+        if (isMounted) setIsLiveSyncing(false);
       }
     };
 
@@ -142,12 +147,12 @@ export const OpenSourceSection: React.FC = () => {
   return (
     <section
       id="opensource"
-      className="w-full min-h-screen flex flex-col justify-start items-center px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-28 mt-8 sm:mt-12 bg-black select-none overflow-x-hidden scroll-mt-24 sm:scroll-mt-28"
+      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-32 pb-28 bg-black select-none overflow-x-hidden scroll-mt-20 sm:scroll-mt-24"
     >
-      {/* Centered Main Section Container */}
-      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center">
-        {/* Section Title: Perfectly Centered in the middle */}
-        <div className="w-full pb-8 sm:pb-12 text-center">
+      {/* Full Width Container Aligned Identically to Experience Section */}
+      <div className="max-w-[1650px] w-full mx-auto flex flex-col">
+        {/* Title Positioned on Left (Matching Experience Section) */}
+        <div className="w-full pb-8 sm:pb-12 text-left">
           <BlurReveal delay={0}>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
               OPEN SOURCE
@@ -155,13 +160,14 @@ export const OpenSourceSection: React.FC = () => {
           </BlurReveal>
         </div>
 
-        {/* Top Centered Divider Line */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent mb-8" />
+        {/* Top Divider: Subtle edge-fading line on PC, visible #857b76 line on phone */}
+        <div className="hidden md:block w-screen relative left-1/2 -translate-x-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none mb-8" />
+        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mb-8" />
 
-        {/* Clean, Polished Top Controls Bar */}
-        <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5">
-          {/* Left: Filter Tabs with Counts */}
-          <div className="flex items-center gap-1.5 flex-wrap">
+        {/* Modern Search & Filter Toolbar */}
+        <div className="w-full flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6">
+          {/* Left: Project Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             {projectFilterOptions.map((opt) => {
               const isSelected = selectedProject === opt.key;
               const count = opt.key === 'all' 
@@ -173,7 +179,7 @@ export const OpenSourceSection: React.FC = () => {
                   type="button"
                   onClick={() => setSelectedProject(opt.key)}
                   className={cn(
-                    "px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer inline-flex items-center gap-1.5 border",
+                    "px-3.5 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer inline-flex items-center gap-2 shrink-0 border",
                     isSelected
                       ? "bg-[#3c4e5a]/50 border-[#9ab4c4]/60 text-white font-semibold shadow-sm"
                       : "bg-white/[0.03] border-white/10 text-slate-400 hover:text-white hover:bg-white/5"
@@ -190,7 +196,7 @@ export const OpenSourceSection: React.FC = () => {
               );
             })}
 
-            {/* Reset Button */}
+            {/* Reset Filter Button */}
             {(selectedProject !== 'all' || searchQuery !== '') && (
               <button
                 type="button"
@@ -198,63 +204,64 @@ export const OpenSourceSection: React.FC = () => {
                   setSelectedProject('all');
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-mono text-slate-400 hover:text-white bg-white/5 border border-white/10 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono text-slate-400 hover:text-white bg-white/5 border border-white/10 hover:border-white/20 transition-colors cursor-pointer shrink-0"
               >
                 <span>Reset</span>
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          {/* Right: Clean, Well-Padded Search Box */}
-          <div className="flex items-center gap-3">
-            <div className="relative w-full sm:w-72">
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {/* Right: Polished Search Box & Total Merged Counter */}
+          <div className="flex items-center gap-3 w-full lg:w-auto">
+            <div className="relative flex-1 lg:w-80">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search PRs or repos..."
+                placeholder="Search PR title, repo, #number..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white/[0.04] border border-white/10 hover:border-white/20 focus:border-[#9ab4c4] rounded-xl pl-9 pr-8 py-1.5 text-xs text-white placeholder:text-slate-500 font-mono transition-colors focus:outline-none"
+                className="w-full bg-white/[0.04] border border-white/10 hover:border-white/20 focus:border-[#9ab4c4] rounded-xl pl-10 pr-9 py-2 text-xs text-white placeholder:text-slate-500 font-mono transition-all focus:outline-none focus:ring-1 focus:ring-[#9ab4c4]/30"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
-            <div className="shrink-0 px-3 py-1.5 rounded-xl bg-purple-950/40 border border-purple-500/40 text-xs font-mono text-purple-300 font-medium flex items-center gap-1.5">
+            <div className="shrink-0 px-3.5 py-2 rounded-xl bg-purple-950/40 border border-purple-500/40 text-xs font-mono text-purple-300 font-medium flex items-center gap-2 shadow-sm shadow-purple-950/40">
               <GitMerge className="w-3.5 h-3.5 text-purple-400" />
-              <span>{filteredPRs.length}</span>
+              <span>{filteredPRs.length} Merged</span>
+              {isLiveSyncing && <RefreshCw className="w-3 h-3 animate-spin text-slate-400 ml-0.5" />}
             </div>
           </div>
         </div>
 
         {/* =========================================================================
-            FIXED HEADER & FOOTER TABLE (originui / shadcn pattern with 100% column alignment)
+            PROFESSIONAL FIXED HEADER & FOOTER TABLE (Column-Symmetric, Padded Rows)
             ========================================================================= */}
-        <div className="w-full bg-background">
-          <div className="h-[600px] sm:h-[680px] flex flex-col rounded-2xl border border-white/10 bg-[#0c1017]/90 backdrop-blur-xl overflow-hidden shadow-2xl">
-            {/* Table Header (flex-none) */}
+        <div className="w-full bg-transparent">
+          <div className="h-[640px] sm:h-[720px] lg:h-[760px] flex flex-col rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0c1017]/90 backdrop-blur-2xl overflow-hidden shadow-2xl">
+            {/* Fixed Sticky Header */}
             <div className="flex-none">
-              <Table className="w-full table-fixed border-separate border-spacing-0">
-                <TableHeader className="sticky top-0 z-10 bg-[#0c1017]/95 backdrop-blur-md">
+              <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
+                <TableHeader className="sticky top-0 z-20 bg-[#0c1017] border-b border-white/10">
                   <TableRow className="border-b border-white/10 hover:bg-transparent">
-                    <TableHead className="w-[50%] py-4 px-4 sm:px-6 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-full sm:w-[52%] py-4 px-6 sm:px-8 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Pull Request
                     </TableHead>
-                    <TableHead className="w-[24%] py-4 px-4 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold hidden sm:table-cell">
+                    <TableHead className="w-[22%] py-4 px-6 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold hidden sm:table-cell">
                       Repository
                     </TableHead>
-                    <TableHead className="w-[13%] py-4 px-4 text-center font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-[13%] py-4 px-4 text-center font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold hidden sm:table-cell">
                       Status
                     </TableHead>
-                    <TableHead className="w-[13%] py-4 px-4 sm:px-6 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-[13%] py-4 px-6 sm:px-8 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold hidden sm:table-cell">
                       Merged Date
                     </TableHead>
                   </TableRow>
@@ -262,80 +269,97 @@ export const OpenSourceSection: React.FC = () => {
               </Table>
             </div>
 
-            {/* Scrollable Body (flex-1 overflow-y-auto, data-lenis-prevent enabled) */}
+            {/* Scrollable Body: data-lenis-prevent enabled to allow native internal scrolling */}
             <div 
               ref={scrollBodyRef}
               data-lenis-prevent="true"
               onWheel={handleWheel}
-              className="flex-1 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
+              className="flex-1 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
             >
               {filteredPRs.length > 0 ? (
-                <Table className="w-full table-fixed border-separate border-spacing-0 [&_td]:border-border [&_tr:not(:last-child)_td]:border-b">
+                <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0 [&_td]:border-white/[0.05] [&_tr:not(:last-child)_td]:border-b">
                   <TableBody>
                     {filteredPRs.map((pr) => (
                       <TableRow
                         key={pr.id}
-                        className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.06] group"
+                        className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.05] group"
                       >
-                        {/* Pull Request: Title + Number */}
-                        <TableCell className="w-[50%] py-4 px-4 sm:px-6 font-medium align-middle">
-                          <div className="flex flex-col gap-1.5">
-                            <div className="flex items-start gap-2.5 min-w-0">
-                              <span className="text-[#9ab4c4] text-xs font-mono font-semibold pt-0.5 select-none shrink-0 bg-[#3c4e5a]/25 border border-[#3c4e5a]/40 px-2 py-0.5 rounded">
+                        {/* Pull Request: Increased Row Height & Spacious Padding */}
+                        <TableCell className="w-full sm:w-[52%] py-6 px-6 sm:px-8 font-medium align-middle">
+                          <div className="flex flex-col gap-2">
+                            <div className="flex items-start gap-3 min-w-0">
+                              <span className="text-[#9ab4c4] text-xs font-mono font-semibold pt-0.5 select-none shrink-0 bg-[#3c4e5a]/30 border border-[#9ab4c4]/40 px-2.5 py-1 rounded-md tracking-wide">
                                 #{pr.number}
                               </span>
                               <a
                                 href={pr.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm font-medium text-white group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-snug line-clamp-2"
+                                className="text-[15px] sm:text-[16px] font-semibold text-white group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-relaxed line-clamp-2"
                                 title={pr.title}
                               >
                                 {pr.title}
                               </a>
                             </div>
 
-                            {/* Mobile-only secondary line */}
+                            {/* Mobile-only secondary row */}
                             <div className="flex sm:hidden items-center justify-between gap-2 text-xs font-mono pt-1 text-slate-400">
-                              <span className="truncate max-w-[180px] bg-white/5 border border-white/10 px-1.5 py-0.5 rounded text-[11px]">
+                              <span className="truncate max-w-[190px] bg-white/5 border border-white/10 px-2 py-0.5 rounded text-[11px]">
                                 {pr.repo}
                               </span>
+                              <div className="flex items-center gap-2">
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold text-purple-300 bg-purple-950/60 border border-purple-500/40">
+                                  <GitMerge className="w-2.5 h-2.5 text-purple-400" />
+                                  <span>merged</span>
+                                </span>
+                                <span className="text-slate-400 text-xs tabular-nums">
+                                  {pr.date}
+                                </span>
+                                <a
+                                  href={pr.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-1 text-slate-400 hover:text-white"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </TableCell>
 
                         {/* Repository (Desktop) */}
-                        <TableCell className="w-[24%] py-4 px-4 font-mono text-xs text-slate-300 align-middle hidden sm:table-cell">
+                        <TableCell className="w-[22%] py-6 px-6 font-mono text-xs text-slate-300 align-middle hidden sm:table-cell">
                           <a
                             href={`https://github.com/${pr.repo}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 hover:border-white/20 hover:text-white transition-colors truncate max-w-full"
+                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 hover:border-white/25 hover:bg-white/[0.08] hover:text-white transition-all truncate max-w-full"
                           >
                             <span className="truncate">{pr.repo}</span>
                           </a>
                         </TableCell>
 
-                        {/* Status: Merged pill */}
-                        <TableCell className="w-[13%] py-4 px-4 text-center align-middle">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium text-purple-300 bg-purple-950/60 border border-purple-500/40">
-                            <GitMerge className="w-3 h-3 text-purple-400" />
+                        {/* Status: Merged badge (Desktop) */}
+                        <TableCell className="w-[13%] py-6 px-4 text-center align-middle hidden sm:table-cell">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium text-purple-300 bg-purple-950/60 border border-purple-500/40 shadow-sm shadow-purple-950/50">
+                            <GitMerge className="w-3.5 h-3.5 text-purple-400" />
                             <span>merged</span>
                           </span>
                         </TableCell>
 
-                        {/* Merged Date & External Link */}
-                        <TableCell className="w-[13%] py-4 px-4 sm:px-6 text-right font-mono text-xs text-slate-400 tabular-nums align-middle">
-                          <div className="flex items-center justify-end gap-2">
+                        {/* Merged Date & External Link (Desktop) */}
+                        <TableCell className="w-[13%] py-6 px-6 sm:px-8 text-right font-mono text-xs sm:text-sm text-slate-400 tabular-nums align-middle hidden sm:table-cell">
+                          <div className="flex items-center justify-end gap-3">
                             <span>{pr.date}</span>
                             <a
                               href={pr.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1 rounded text-slate-500 hover:text-white transition-colors"
+                              className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
                               title="View PR on GitHub"
                             >
-                              <ExternalLink className="w-3.5 h-3.5" />
+                              <ExternalLink className="w-4 h-4" />
                             </a>
                           </div>
                         </TableCell>
@@ -344,9 +368,9 @@ export const OpenSourceSection: React.FC = () => {
                   </TableBody>
                 </Table>
               ) : (
-                <div className="h-full min-h-[360px] flex flex-col items-center justify-center text-center space-y-2 text-slate-500 font-mono text-xs p-6">
-                  <GitMerge className="w-8 h-8 text-slate-600" />
-                  <p>No merged pull requests found matching your filter.</p>
+                <div className="h-full min-h-[360px] flex flex-col items-center justify-center text-center space-y-3 text-slate-400 font-mono text-xs p-8">
+                  <GitMerge className="w-10 h-10 text-slate-600" />
+                  <p className="text-sm text-white font-medium">No merged pull requests found matching your filter.</p>
                   <button
                     type="button"
                     onClick={() => {
@@ -355,21 +379,21 @@ export const OpenSourceSection: React.FC = () => {
                     }}
                     className="text-xs text-purple-400 hover:underline pt-1 cursor-pointer"
                   >
-                    Clear search and filter
+                    Clear search and filters
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Table Footer (flex-none) */}
+            {/* Fixed Sticky Footer */}
             <div className="flex-none">
-              <Table className="w-full table-fixed border-separate border-spacing-0">
-                <TableFooter className="sticky bottom-0 bg-[#0c1017]/95 backdrop-blur-md border-t border-white/10">
+              <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
+                <TableFooter className="sticky bottom-0 z-20 bg-[#0c1017] border-t border-white/10">
                   <TableRow className="hover:bg-transparent">
-                    <TableCell colSpan={2} className="w-[74%] py-3.5 px-4 sm:px-6 text-xs font-mono text-slate-400">
+                    <TableCell colSpan={2} className="w-[74%] py-4 px-6 sm:px-8 text-xs font-mono text-slate-400">
                       Total Merged Contributions
                     </TableCell>
-                    <TableCell colSpan={2} className="w-[26%] text-right py-3.5 px-4 sm:px-6 text-xs font-mono text-[#9ab4c4] font-semibold">
+                    <TableCell colSpan={2} className="w-[26%] text-right py-4 px-6 sm:px-8 text-xs font-mono text-[#9ab4c4] font-semibold">
                       {filteredPRs.length} Merged Pull Requests
                     </TableCell>
                   </TableRow>
