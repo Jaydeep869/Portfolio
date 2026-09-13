@@ -11,26 +11,6 @@ export interface MergedPR {
 
 export const allMergedPRs: MergedPR[] = [
   {
-    "id": "Yash-Bankar/fmcw-25-next.js-3",
-    "number": 3,
-    "title": "feat: Add 20% BHU student email OTP verification, Konfhub checkout discount, and fix Google Auth client error",
-    "repo": "Yash-Bankar/fmcw-25-next.js",
-    "project": "Other",
-    "url": "https://github.com/Yash-Bankar/fmcw-25-next.js/pull/3",
-    "date": "Sep 11, 2026",
-    "isoDate": "2026-09-11T22:13:52Z"
-  },
-  {
-    "id": "Jaydeep869/fmcw-26-next.js-1",
-    "number": 1,
-    "title": "feat: Add 20% BHU student email OTP verification, Konfhub checkout discount, and fix Google Auth client error",
-    "repo": "Jaydeep869/fmcw-26-next.js",
-    "project": "Other",
-    "url": "https://github.com/Jaydeep869/fmcw-26-next.js/pull/1",
-    "date": "Sep 11, 2026",
-    "isoDate": "2026-09-11T22:12:21Z"
-  },
-  {
     "id": "SBOMit/sbomit-60",
     "number": 60,
     "title": "Show enrichment summary for cataloged SBOMs",
