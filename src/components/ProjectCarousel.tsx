@@ -2,14 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   ArrowLeft, 
   ArrowRight, 
-  ExternalLink, 
-  FolderGit2, 
   X, 
   Layers, 
-  Check, 
-  Activity, 
-  Maximize2 
+  Activity 
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BlurReveal } from './ui/blur-reveal';
 
 interface Project {
   id: string;
@@ -25,6 +23,16 @@ interface Project {
   highlights: string[];
 }
 
+const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+    />
+  </svg>
+);
+
 const projects: Project[] = [
   {
     id: "hyperion-telemetry",
@@ -35,8 +43,8 @@ const projects: Project[] = [
     metrics: "Sub-15ms telemetry latency",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
     tags: ["React 19", "TypeScript", "Node.js", "PostgreSQL", "Docker"],
-    liveUrl: "https://github.com",
-    githubUrl: "https://github.com",
+    liveUrl: "https://github.com/jaydeep869",
+    githubUrl: "https://github.com/jaydeep869",
     highlights: [
       "Built resilient bidirectional websocket streams for live server node health.",
       "Optimized time-series chart rendering for 50,000+ continuous data points.",
@@ -52,8 +60,8 @@ const projects: Project[] = [
     metrics: "Locked 60 FPS compositor",
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
     tags: ["GSAP", "Lenis", "TypeScript", "Tailwind CSS"],
-    liveUrl: "https://github.com",
-    githubUrl: "https://github.com",
+    liveUrl: "https://github.com/jaydeep869",
+    githubUrl: "https://github.com/jaydeep869",
     highlights: [
       "Engineered zero-lag scrub physics across high-refresh mobile displays.",
       "Foreground alpha silhouette masking physically occluding towering typography.",
@@ -69,8 +77,8 @@ const projects: Project[] = [
     metrics: "100+ reusable tokens",
     image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80",
     tags: ["TypeScript", "Tailwind CSS", "Radix UI", "React"],
-    liveUrl: "https://github.com",
-    githubUrl: "https://github.com",
+    liveUrl: "https://github.com/jaydeep869",
+    githubUrl: "https://github.com/jaydeep869",
     highlights: [
       "Fully typed component props with automatic autocomplete and prop validation.",
       "Zero layout shift design tokens calibrated across desktop and mobile.",
@@ -86,8 +94,8 @@ const projects: Project[] = [
     metrics: "1.2M ops/sec throughput",
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=80",
     tags: ["C++", "Python", "Distributed Systems", "Networking"],
-    liveUrl: "https://github.com",
-    githubUrl: "https://github.com",
+    liveUrl: "https://github.com/jaydeep869",
+    githubUrl: "https://github.com/jaydeep869",
     highlights: [
       "Implemented log-structured merge-tree (LSM) engine with fast binary search index.",
       "Raft leader election and log replication across multi-node topologies.",
@@ -103,8 +111,8 @@ const projects: Project[] = [
     metrics: "Sub-80ms AST query time",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80",
     tags: ["Python", "TypeScript", "Tree-sitter", "Vector DB"],
-    liveUrl: "https://github.com",
-    githubUrl: "https://github.com",
+    liveUrl: "https://github.com/jaydeep869",
+    githubUrl: "https://github.com/jaydeep869",
     highlights: [
       "Built AST symbol extraction pipelines using Tree-sitter parsers.",
       "Embedded code chunks into local vector indices for semantic search.",
@@ -159,6 +167,7 @@ export const ProjectCarousel: React.FC = () => {
   const handlePointerUp = () => {
     if (!isDragging) return;
     setIsDragging(false);
+
     if (dragOffset > 60) {
       prevSlide();
     } else if (dragOffset < -60) {
@@ -170,27 +179,23 @@ export const ProjectCarousel: React.FC = () => {
   return (
     <section 
       id="projects" 
-      className="relative w-full min-h-[100svh] flex flex-col justify-center items-center py-16 sm:py-24 overflow-hidden select-none"
+      className="relative w-full min-h-[100svh] flex flex-col justify-center items-center py-16 sm:py-24 overflow-hidden select-none bg-black"
     >
       {/* Subtle Background Glow */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] pointer-events-none rounded-full blur-[140px] opacity-25"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] pointer-events-none rounded-full blur-[140px] opacity-20"
         style={{ background: 'radial-gradient(circle, #3c4e5a 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-8 flex flex-col items-center">
         
-        {/* Header Section */}
-        <div className="text-center space-y-2 mb-10 sm:mb-14">
-          <span className="text-xs font-mono tracking-[0.25em] uppercase text-[#9ab4c4] font-semibold">
-            03 // Featured Works
-          </span>
-          <h3 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Selected Projects
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
-            Interactive 3D stacked deck • Drag or click side cards to cycle • Tap center card for details
-          </p>
+        {/* Header Section: Matches ExperienceSection typography exactly, centered */}
+        <div className="w-full pb-8 sm:pb-12 text-center">
+          <BlurReveal delay={0}>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
+              FEATURED PROJECTS
+            </h2>
+          </BlurReveal>
         </div>
 
         {/* 3D Stacked Carousel Stage */}
@@ -200,7 +205,7 @@ export const ProjectCarousel: React.FC = () => {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          className="relative w-full h-[380px] sm:h-[430px] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
+          className="relative w-full h-[290px] sm:h-[320px] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
           style={{ perspective: '1200px' }}
         >
           {projects.map((project, idx) => {
@@ -212,8 +217,6 @@ export const ProjectCarousel: React.FC = () => {
             const isCenter = diff === 0;
             const isLeft = diff === -1;
             const isRight = diff === 1;
-            const isFarLeft = diff === -2;
-            const isFarRight = diff === 2;
             const isVisible = Math.abs(diff) <= 2;
 
             if (!isVisible) return null;
@@ -221,7 +224,6 @@ export const ProjectCarousel: React.FC = () => {
             // Responsive offset calculations
             const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
             const xStep = isMobile ? 130 : 250;
-            const farXStep = isMobile ? 220 : 420;
 
             let translateX = 0;
             let translateY = 0;
@@ -239,32 +241,32 @@ export const ProjectCarousel: React.FC = () => {
               opacity = 1;
             } else if (isLeft) {
               translateX = -xStep + dragOffset * 0.25;
-              translateY = 18;
-              rotateZ = -8;
+              translateY = 16;
+              rotateZ = -7;
               scale = 0.88;
               zIndex = 20;
-              opacity = 0.75;
+              opacity = 0.7;
             } else if (isRight) {
               translateX = xStep + dragOffset * 0.25;
-              translateY = 18;
-              rotateZ = 8;
+              translateY = 16;
+              rotateZ = 7;
               scale = 0.88;
               zIndex = 20;
-              opacity = 0.75;
-            } else if (isFarLeft) {
-              translateX = -farXStep;
-              translateY = 36;
+              opacity = 0.7;
+            } else if (diff === -2) {
+              translateX = (isMobile ? -210 : -420) + dragOffset * 0.15;
+              translateY = 28;
               rotateZ = -14;
-              scale = 0.76;
+              scale = 0.78;
               zIndex = 10;
-              opacity = 0.35;
-            } else if (isFarRight) {
-              translateX = farXStep;
-              translateY = 36;
+              opacity = 0.4;
+            } else if (diff === 2) {
+              translateX = (isMobile ? 210 : 420) + dragOffset * 0.15;
+              translateY = 28;
               rotateZ = 14;
-              scale = 0.76;
+              scale = 0.78;
               zIndex = 10;
-              opacity = 0.35;
+              opacity = 0.4;
             }
 
             return (
@@ -285,98 +287,67 @@ export const ProjectCarousel: React.FC = () => {
                   transition: isDragging ? 'none' : 'transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.5s ease',
                   willChange: 'transform, opacity',
                 }}
-                className={`absolute w-[290px] sm:w-[350px] md:w-[380px] h-[340px] sm:h-[390px] rounded-2xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden border transition-shadow duration-300 ${
+                className={`absolute w-[280px] sm:w-[340px] md:w-[370px] h-[235px] sm:h-[265px] rounded-2xl p-3 sm:p-3.5 flex flex-col overflow-hidden border transition-shadow duration-300 cursor-pointer ${
                   isCenter 
                     ? 'bg-[#0f1722]/95 border-[#9ab4c4]/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_35px_rgba(60,78,90,0.4)] ring-1 ring-white/20' 
                     : 'bg-[#0a1017]/85 border-white/10 hover:border-white/25 shadow-xl hover:opacity-90'
                 }`}
               >
-                <div className="space-y-3 sm:space-y-4">
-                  {/* Image Preview */}
-                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                      loading="lazy"
-                      draggable={false}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
-                    
-                    {/* Metrics Tag */}
-                    <span className="absolute bottom-2.5 left-3 px-2 py-0.5 rounded-md text-[10px] font-mono bg-black/75 backdrop-blur-md text-[#9ab4c4] border border-white/10">
-                      {project.metrics}
-                    </span>
-
-                    {isCenter && (
-                      <span className="absolute top-2.5 right-2.5 p-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white/80 hover:text-white border border-white/10 flex items-center justify-center">
-                        <Maximize2 className="w-3.5 h-3.5" />
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Text Content */}
-                  <div>
-                    <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold">
-                      {project.category}
-                    </span>
-                    <h4 className="text-base sm:text-xl font-bold text-white mt-0.5 leading-snug line-clamp-1">
-                      {project.title}
-                    </h4>
-                    <p className="text-xs text-slate-300 mt-1.5 line-clamp-2 leading-relaxed font-normal">
-                      {project.description}
-                    </p>
-                  </div>
+                {/* Image Preview - Clean & Uncluttered */}
+                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group shrink-0">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                 </div>
 
-                {/* Card Footer */}
-                <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1">
-                    {project.tags.slice(0, 3).map((tag, tIdx) => (
-                      <span key={tIdx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                {/* Card Title & GitHub Icon - Centered vertically in remaining space */}
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="flex items-center justify-center gap-2.5 sm:gap-3 px-2 sm:px-3">
+                    <h3 className="text-base sm:text-lg font-bold text-white font-['Space_Grotesk',sans-serif] tracking-tight truncate min-w-0">
+                      {project.title}
+                    </h3>
 
-                  {isCenter ? (
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedProject(project);
-                      }}
-                      className="text-xs font-mono font-medium text-[#9ab4c4] hover:text-white transition flex items-center gap-1 cursor-pointer"
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                      aria-label={`GitHub repository for ${project.title}`}
+                      title="View GitHub Repository"
                     >
-                      <span>Explore</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  ) : (
-                    <span className="text-[10px] font-mono text-slate-500">Tap to view</span>
-                  )}
+                      <GithubIcon className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Navigation Controls & Pagination */}
-        <div className="flex items-center gap-6 mt-8 sm:mt-10">
+        {/* Carousel Controls: Arrows & Micro Indicators */}
+        <div className="flex items-center justify-center gap-6 mt-6 sm:mt-8 z-30">
           <button
             onClick={prevSlide}
             className="p-3 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/15 text-slate-300 hover:text-white transition cursor-pointer shadow-lg active:scale-95"
-            aria-label="Previous Slide"
+            aria-label="Previous Project"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
 
-          {/* Dots Indicator */}
+          {/* Indicator Pills */}
           <div className="flex items-center gap-2">
             {projects.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                aria-label={`Go to project ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   idx === activeIndex 
                     ? 'w-8 bg-[#9ab4c4]' 
                     : 'w-2 bg-white/20 hover:bg-white/40'
@@ -388,7 +359,7 @@ export const ProjectCarousel: React.FC = () => {
           <button
             onClick={nextSlide}
             className="p-3 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/15 text-slate-300 hover:text-white transition cursor-pointer shadow-lg active:scale-95"
-            aria-label="Next Slide"
+            aria-label="Next Project"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -396,105 +367,110 @@ export const ProjectCarousel: React.FC = () => {
 
       </div>
 
-      {/* Project Detail Modal Drawer */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-          <div 
-            onClick={() => setSelectedProject(null)}
-            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
-          />
+      {/* Smooth Animated Project Detail Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+            {/* Animated Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              onClick={() => setSelectedProject(null)}
+              className="absolute inset-0 bg-black/85 backdrop-blur-xl"
+            />
 
-          <div className="relative w-full max-w-2xl max-h-[88vh] bg-[#0c131a] border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10 animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/50">
-              <div className="flex items-center gap-2">
-                <FolderGit2 className="w-4 h-4 text-[#9ab4c4]" />
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-300 font-semibold">
-                  {selectedProject.category}
-                </span>
-              </div>
+            {/* Animated Modal Container */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.92, y: 18 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 18 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 320 }}
+              className="relative w-full max-w-2xl max-h-[88vh] bg-[#0c131a] border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+            >
+              {/* Modal Header — macOS-style traffic lights + title */}
+              <div className="flex items-center gap-4 py-3.5 border-b border-white/10 bg-black/50" style={{ paddingLeft: 20, paddingRight: 20 }}>
+                {/* Close (Red) */}
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition cursor-pointer flex items-center justify-center group"
+                  aria-label="Close Modal"
+                >
+                  <X className="w-2 h-2 text-[#4a0002] opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
 
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white transition cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-200">
-              <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-white/10">
-                <img 
-                  src={selectedProject.image} 
-                  alt={selectedProject.title} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                {/* Title */}
+                <h3 className="text-sm sm:text-base font-bold text-white font-['Space_Grotesk',sans-serif] tracking-tight truncate flex-1">
                   {selectedProject.title}
                 </h3>
-                <p className="text-sm text-slate-300 mt-2 leading-relaxed">
-                  {selectedProject.fullDetails}
-                </p>
-              </div>
 
-              <div className="space-y-2">
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-[#9ab4c4]" />
-                  <span>Technical Highlights</span>
-                </span>
-                <ul className="space-y-2 text-xs sm:text-sm text-slate-300">
-                  {selectedProject.highlights.map((h, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-2 pt-2 border-t border-white/10">
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#9ab4c4]" />
-                  <span>Technologies</span>
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedProject.tags.map((t, i) => (
-                    <span key={i} className="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                <a
-                  href={selectedProject.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2.5 rounded-lg bg-[#3c4e5a] hover:bg-[#4d6373] text-white text-xs font-medium transition flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95"
-                >
-                  <span>Live Demo</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                {/* GitHub Icon Link */}
                 <a
                   href={selectedProject.githubUrl}
                   target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white text-xs font-medium transition flex items-center gap-1.5 cursor-pointer active:scale-95"
+                  rel="noopener noreferrer"
+                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                  aria-label={`GitHub repository for ${selectedProject.title}`}
+                  title="View on GitHub"
                 >
-                  <span>Source Code</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
+                  <GithubIcon className="w-4 h-4" />
                 </a>
               </div>
-            </div>
 
+              {/* Modal Body — Experience-section typography */}
+              <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-200">
+                <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-white/10">
+                  <img 
+                    src={selectedProject.image} 
+                    alt={selectedProject.title} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Description — matching Experience section font sizing */}
+                <div>
+                  <p className="text-sm sm:text-[15px] text-slate-300 leading-[1.7]">
+                    {selectedProject.fullDetails}
+                  </p>
+                </div>
+
+                {/* Highlights — matching Experience section bullets exactly */}
+                <div className="space-y-2">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#a89f9a] font-semibold flex items-center gap-1.5">
+                    <Activity className="w-3.5 h-3.5 text-[#9ab4c4]" />
+                    <span>Technical Highlights</span>
+                  </span>
+                  <ul className="space-y-3.5 m-0 p-0 list-none pt-1">
+                    {selectedProject.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-3.5 text-sm sm:text-[15px] text-slate-200 leading-[1.7]">
+                        <span className="text-[#6a90a6] text-base mt-0.5 select-none shrink-0 font-bold">▹</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Technologies */}
+                <div className="space-y-2 pt-2 border-t border-white/10">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#a89f9a] font-semibold flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-[#9ab4c4]" />
+                    <span>Technologies</span>
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedProject.tags.map((t, i) => (
+                      <span key={i} className="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 };
