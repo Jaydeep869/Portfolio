@@ -109,37 +109,37 @@ export const OpenSourceSection: React.FC = () => {
   return (
     <section
       id="opensource"
-      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-32 pb-28 bg-black select-none overflow-x-hidden scroll-mt-20 sm:scroll-mt-24"
+      className="w-full min-h-[100svh] flex flex-col justify-start items-center px-4 sm:px-10 lg:px-14 xl:px-18 pt-16 sm:pt-28 lg:pt-32 pb-20 sm:pb-28 bg-black select-none overflow-x-hidden scroll-mt-16 sm:scroll-mt-24"
     >
       {/* Full Width Container Identically Aligned to Experience Section */}
       <div className="max-w-[1650px] w-full mx-auto flex flex-col">
         {/* Title Positioned on Left (Matching Experience Section) */}
-        <div className="w-full pb-8 sm:pb-12 text-left">
+        <div className="w-full pb-6 sm:pb-12 text-left">
           <BlurReveal delay={0}>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
               OPEN SOURCE
             </h2>
           </BlurReveal>
         </div>
 
         {/* Top Divider: Subtle edge-fading line on PC, visible #857b76 line on phone */}
-        <div className="hidden md:block w-screen relative left-1/2 -translate-x-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none mb-8" />
-        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mb-8" />
+        <div className="hidden md:block w-screen relative left-1/2 -translate-x-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none mb-6 sm:mb-8" />
+        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mb-6 sm:mb-8" />
 
         {/* =========================================================================
             SEAMLESS FIXED HEADER & FOOTER TABLE (Square/Borderless, Hidden Scrollbar)
             ========================================================================= */}
         <div className="w-full bg-transparent">
-          <div className="h-[680px] sm:h-[760px] lg:h-[820px] flex flex-col bg-black/40 overflow-hidden">
+          <div className="h-[560px] sm:h-[760px] lg:h-[820px] flex flex-col bg-black/40 overflow-hidden">
             {/* Table Header (flex-none) */}
             <div className="flex-none">
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
                 <TableHeader className="sticky top-0 z-20 bg-black/95 backdrop-blur-md border-b border-white/10">
                   <TableRow className="border-b border-white/10 hover:bg-transparent">
-                    <TableHead className="w-[78%] sm:w-[82%] py-5 px-6 sm:px-10 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-[66%] sm:w-[80%] py-4 sm:py-5 px-3 sm:px-10 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Pull Request
                     </TableHead>
-                    <TableHead className="w-[22%] sm:w-[18%] py-5 px-6 sm:px-10 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    <TableHead className="w-[34%] sm:w-[20%] py-4 sm:py-5 px-3 sm:px-10 text-right font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Status
                     </TableHead>
                   </TableRow>
@@ -161,34 +161,34 @@ export const OpenSourceSection: React.FC = () => {
                       key={pr.id}
                       className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.05] group"
                     >
-                      {/* Pull Request Title (Thin, Larger, Elegant Font) */}
-                      <TableCell className="w-[78%] sm:w-[82%] py-7 sm:py-9 px-6 sm:px-10 font-normal align-middle">
+                      {/* Pull Request Title (Thin, Larger, Elegant Font with mobile padding) */}
+                      <TableCell className="w-[66%] sm:w-[80%] py-5 sm:py-9 px-3 sm:px-10 pr-2 sm:pr-6 font-normal align-middle">
                         <a
                           href={pr.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-lg sm:text-xl lg:text-[22px] font-light text-slate-100 group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-snug tracking-tight block"
+                          className="text-[15px] sm:text-xl lg:text-[22px] font-light text-slate-100 group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-snug tracking-tight block"
                           title={pr.title}
                         >
                           {pr.title}
                         </a>
                       </TableCell>
 
-                      {/* Status (Interactive Merged Button) */}
-                      <TableCell className="w-[22%] sm:w-[18%] py-7 sm:py-9 px-6 sm:px-10 text-right align-middle">
+                      {/* Status (Interactive Merged Button with mobile optimization) */}
+                      <TableCell className="w-[34%] sm:w-[20%] py-5 sm:py-9 px-3 sm:px-10 text-right align-middle">
                         <div className="flex items-center justify-end">
                           <a
                             href={pr.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-purple-950/35 hover:bg-purple-900/60 active:scale-95 border border-purple-500/30 hover:border-purple-400/70 text-purple-200 hover:text-white transition-all duration-200 shadow-sm shadow-purple-950/40 hover:shadow-purple-900/50 group/btn shrink-0 cursor-pointer"
+                            className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-purple-950/35 hover:bg-purple-900/60 active:scale-95 border border-purple-500/30 hover:border-purple-400/70 text-purple-200 hover:text-white transition-all duration-200 shadow-sm shadow-purple-950/40 hover:shadow-purple-900/50 group/btn shrink-0 cursor-pointer"
                             title="View merged pull request on GitHub"
                           >
-                            <GitMerge className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 group-hover/btn:text-purple-300 group-hover/btn:rotate-12 transition-transform duration-200" />
-                            <span className="font-mono text-xs sm:text-[13px] font-medium tracking-wide">
+                            <GitMerge className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 group-hover/btn:text-purple-300 group-hover/btn:rotate-12 transition-transform duration-200 shrink-0" />
+                            <span className="font-mono text-[11px] sm:text-[13px] font-medium tracking-wide">
                               merged
                             </span>
-                            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400/60 group-hover/btn:text-purple-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-200" />
+                            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400/60 group-hover/btn:text-purple-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-200 shrink-0" />
                           </a>
                         </div>
                       </TableCell>
@@ -203,11 +203,11 @@ export const OpenSourceSection: React.FC = () => {
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
                 <TableFooter className="sticky bottom-0 z-20 bg-black/95 backdrop-blur-md border-t border-white/10">
                   <TableRow className="hover:bg-transparent">
-                    <TableCell className="w-[78%] sm:w-[82%] py-5 px-6 sm:px-10 text-xs font-mono text-slate-400">
+                    <TableCell className="w-[66%] sm:w-[80%] py-4 sm:py-5 px-3 sm:px-10 text-xs font-mono text-slate-400">
                       Total Merged Contributions
                     </TableCell>
-                    <TableCell className="w-[22%] sm:w-[18%] text-right py-5 px-6 sm:px-10 text-xs font-mono text-[#9ab4c4] font-semibold">
-                      {prsList.length} Merged Pull Requests
+                    <TableCell className="w-[34%] sm:w-[20%] text-right py-4 sm:py-5 px-3 sm:px-10 text-xs font-mono text-[#9ab4c4] font-semibold">
+                      {prsList.length} Merged
                     </TableCell>
                   </TableRow>
                 </TableFooter>
