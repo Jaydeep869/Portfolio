@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
+import { BlurReveal } from './ui/blur-reveal';
 
 interface TechItem {
   name: string;
@@ -225,109 +226,126 @@ export const TechStackMarquee: React.FC = () => {
   return (
     <section 
       id="stack" 
-      className="relative w-full min-h-[100svh] flex flex-col justify-center items-center py-16 sm:py-24 overflow-hidden"
+      className="relative w-full min-h-[100svh] flex flex-col justify-start items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-32 pb-32 sm:pb-36 bg-black select-none overflow-x-hidden scroll-mt-20 sm:scroll-mt-24"
     >
-      {/* Subtle Background Glow matching #3c4e5a */}
+      {/* Subtle Background Glow */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] pointer-events-none rounded-full blur-[130px] opacity-20"
-        style={{ background: 'radial-gradient(circle, #3c4e5a 0%, transparent 70%)' }}
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] pointer-events-none rounded-full blur-[140px] opacity-15"
+        style={{ background: 'radial-gradient(circle, #39d353 0%, transparent 70%)' }}
       />
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-8 mb-10 sm:mb-14 text-center space-y-2.5">
-        <h3 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-          Stack & Contributions
-        </h3>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
-          Languages, frameworks, systems, and open source development activity.
-        </p>
-      </div>
-
-      {/* Tech Stack Cards Grid (Clean & Static, No Marquee Animation) */}
-      <div className="relative z-10 max-w-5xl w-full mx-auto px-4 sm:px-8 space-y-8">
-        <div>
-          <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-[#9ab4c4] font-semibold mb-4 text-center sm:text-left">
-            Frontend & Creative Engineering
-          </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-3.5">
-            {frontendTech.map((tech) => (
-              <div
-                key={tech.name}
-                className="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#0c131a]/85 border border-white/10 hover:border-[#9ab4c4]/60 hover:bg-[#121c27] transition-all duration-200 group shadow-sm hover:shadow-[0_0_16px_rgba(60,78,90,0.3)]"
-              >
-                <div className="shrink-0 transition-transform duration-200 group-hover:scale-110">
-                  {tech.icon}
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs sm:text-[13px] font-bold text-white font-mono leading-tight truncate">
-                    {tech.name}
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400 truncate">
-                    {tech.category}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="max-w-[1650px] w-full mx-auto flex flex-col">
+        {/* Title Positioned on Left (Matching Experience Section) */}
+        <div className="w-full pb-8 sm:pb-12 text-left">
+          <BlurReveal delay={0}>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-none font-['Space_Grotesk',sans-serif]">
+              STACK & CONTRIBUTIONS
+            </h2>
+          </BlurReveal>
         </div>
 
-        <div>
-          <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-[#9ab4c4] font-semibold mb-4 text-center sm:text-left">
-            Backend, Systems, DB & Cloud
-          </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-3.5">
-            {backendTech.map((tech) => (
-              <div
-                key={tech.name}
-                className="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#0c131a]/85 border border-white/10 hover:border-[#9ab4c4]/60 hover:bg-[#121c27] transition-all duration-200 group shadow-sm hover:shadow-[0_0_16px_rgba(60,78,90,0.3)]"
-              >
-                <div className="shrink-0 transition-transform duration-200 group-hover:scale-110">
-                  {tech.icon}
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs sm:text-[13px] font-bold text-white font-mono leading-tight truncate">
-                    {tech.name}
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400 truncate">
-                    {tech.category}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+        {/* Top Divider: Subtle edge-fading line on PC, visible line on phone */}
+        <div className="hidden md:block w-screen relative left-1/2 -translate-x-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none mb-12 sm:mb-16" />
+        <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mb-10" />
 
-      {/* GitHub Contribution Activity */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 mt-12 sm:mt-16">
-        <div className="p-5 sm:p-7 rounded-2xl bg-[#0a1017]/80 border border-white/10 backdrop-blur-xl shadow-2xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-white/10">
-            <div>
-              <h4 className="text-base sm:text-lg font-bold text-white font-['Space_Grotesk',sans-serif]">
-                GitHub Contributions
-              </h4>
-              <p className="text-xs font-mono text-slate-400 mt-0.5">
-                @Jaydeep869 · Annual Open Source & Engineering Activity
-              </p>
+        {/* Categories Stack with Generous Spacing and Breathing Room */}
+        <div className="w-full space-y-12 sm:space-y-16">
+          {/* Frontend & Creative Engineering */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <h3 className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#9ab4c4] font-semibold">
+                Frontend & Creative Engineering
+              </h3>
+              <div className="flex-1 h-[1px] bg-white/10" />
             </div>
-            <a
-              href="https://github.com/Jaydeep869"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition-all w-fit cursor-pointer"
-            >
-              <span>View GitHub Profile</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+              {frontendTech.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl bg-[#0c131a]/85 border border-white/10 hover:border-[#9ab4c4]/60 hover:bg-[#121c27] transition-all duration-300 group shadow-md hover:shadow-[0_0_20px_rgba(60,78,90,0.35)]"
+                >
+                  <div className="shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tech.icon}
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-white font-mono leading-tight truncate">
+                      {tech.name}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 truncate mt-0.5">
+                      {tech.category}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* GitHub Activity SVG Graph */}
-          <div className="pt-6 flex flex-col items-center justify-center overflow-x-auto">
-            <img
-              src="https://ghchart.rshah.org/3c4e5a/Jaydeep869"
-              alt="Jaydeep869 GitHub Contributions"
-              className="w-full max-w-4xl min-w-[620px] opacity-90 hover:opacity-100 transition-opacity filter drop-shadow-md"
-              loading="lazy"
-            />
+          {/* Backend, Systems, DB & Cloud */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <h3 className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#9ab4c4] font-semibold">
+                Backend, Systems, DB & Cloud
+              </h3>
+              <div className="flex-1 h-[1px] bg-white/10" />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+              {backendTech.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl bg-[#0c131a]/85 border border-white/10 hover:border-[#9ab4c4]/60 hover:bg-[#121c27] transition-all duration-300 group shadow-md hover:shadow-[0_0_20px_rgba(60,78,90,0.35)]"
+                >
+                  <div className="shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tech.icon}
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-white font-mono leading-tight truncate">
+                      {tech.name}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 truncate mt-0.5">
+                      {tech.category}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* GitHub Contribution Graph Section with Authentic Green & Generous Gap */}
+        <div className="w-full mt-20 sm:mt-24">
+          <div className="p-6 sm:p-10 rounded-3xl bg-[#0a1017]/90 border border-white/15 backdrop-blur-2xl shadow-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 sm:pb-8 border-b border-white/10">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#39d353] shadow-[0_0_10px_#39d353] animate-pulse" />
+                  <h3 className="text-lg sm:text-2xl font-bold text-white font-['Space_Grotesk',sans-serif]">
+                    GitHub Contributions
+                  </h3>
+                </div>
+                <p className="text-xs sm:text-sm font-mono text-slate-400">
+                  @Jaydeep869 · Annual Open Source & Engineering Activity
+                </p>
+              </div>
+              <a
+                href="https://github.com/Jaydeep869"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#39d353]/50 text-xs sm:text-sm font-mono text-slate-300 hover:text-white transition-all w-fit cursor-pointer group"
+              >
+                <span>View GitHub Profile</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#39d353] transition-colors" />
+              </a>
+            </div>
+
+            {/* GitHub Activity SVG Graph with Vibrant GitHub Green (#39d353) */}
+            <div className="pt-8 sm:pt-10 pb-4 flex flex-col items-center justify-center overflow-x-auto [&::-webkit-scrollbar]:hidden">
+              <img
+                src="https://ghchart.rshah.org/39d353/Jaydeep869"
+                alt="Jaydeep869 GitHub Contributions"
+                className="w-full max-w-4xl min-w-[650px] opacity-95 hover:opacity-100 transition-opacity filter drop-shadow-[0_0_20px_rgba(57,211,83,0.18)]"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
