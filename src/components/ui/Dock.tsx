@@ -20,7 +20,7 @@ const navItems: DockItem[] = [
   { label: 'About', href: '#about', icon: <User className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Experience', href: '#experience', icon: <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Projects', href: '#projects', icon: <FolderGit2 className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { label: 'Tech Stack', href: '#stack', icon: <Cpu className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { label: 'Stack & Contributions', href: '#stack', icon: <Cpu className="w-4 h-4 sm:w-5 sm:h-5" /> },
   { label: 'Contact', href: '#contact', icon: <Mail className="w-4 h-4 sm:w-5 sm:h-5" /> },
 ];
 
