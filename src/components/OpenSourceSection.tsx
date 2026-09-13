@@ -161,35 +161,34 @@ export const OpenSourceSection: React.FC = () => {
                       key={pr.id}
                       className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.05] group"
                     >
-                      {/* Pull Request Title (Elevated Up and Down Height) */}
-                      <TableCell className="w-[78%] sm:w-[82%] py-8 sm:py-10 px-6 sm:px-10 font-medium align-middle">
+                      {/* Pull Request Title (Thin, Larger, Elegant Font) */}
+                      <TableCell className="w-[78%] sm:w-[82%] py-7 sm:py-9 px-6 sm:px-10 font-normal align-middle">
                         <a
                           href={pr.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[16px] sm:text-[18px] font-semibold text-white group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-relaxed block"
+                          className="text-lg sm:text-xl lg:text-[22px] font-light text-slate-100 group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-snug tracking-tight block"
                           title={pr.title}
                         >
                           {pr.title}
                         </a>
                       </TableCell>
 
-                      {/* Status & Link (Merged Badge & External Link Icon) */}
-                      <TableCell className="w-[22%] sm:w-[18%] py-8 sm:py-10 px-6 sm:px-10 text-right align-middle">
-                        <div className="flex items-center justify-end gap-3 sm:gap-4">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium text-purple-300 bg-purple-950/60 border border-purple-500/40 shadow-sm shadow-purple-950/50 shrink-0">
-                            <GitMerge className="w-3.5 h-3.5 text-purple-400" />
-                            <span>merged</span>
-                          </span>
-
+                      {/* Status (Interactive Merged Button) */}
+                      <TableCell className="w-[22%] sm:w-[18%] py-7 sm:py-9 px-6 sm:px-10 text-right align-middle">
+                        <div className="flex items-center justify-end">
                           <a
                             href={pr.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all shrink-0 cursor-pointer"
-                            title="Open PR on GitHub"
+                            className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-purple-950/35 hover:bg-purple-900/60 active:scale-95 border border-purple-500/30 hover:border-purple-400/70 text-purple-200 hover:text-white transition-all duration-200 shadow-sm shadow-purple-950/40 hover:shadow-purple-900/50 group/btn shrink-0 cursor-pointer"
+                            title="View merged pull request on GitHub"
                           >
-                            <ExternalLink className="w-4 h-4" />
+                            <GitMerge className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 group-hover/btn:text-purple-300 group-hover/btn:rotate-12 transition-transform duration-200" />
+                            <span className="font-mono text-xs sm:text-[13px] font-medium tracking-wide">
+                              merged
+                            </span>
+                            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400/60 group-hover/btn:text-purple-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-200" />
                           </a>
                         </div>
                       </TableCell>
