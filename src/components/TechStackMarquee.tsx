@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { BlurReveal } from './ui/blur-reveal';
+import { CommitsGrid } from './ui/CommitsGrid';
 
 export const TechStackMarquee: React.FC = () => {
   return (
@@ -33,40 +34,30 @@ export const TechStackMarquee: React.FC = () => {
           {/* User's custom stack component / buttons will be inserted here */}
         </div>
 
-        {/* GitHub Contribution Graph Section with Authentic Vibrant Green & Generous Gap */}
-        <div className="w-full mt-6 sm:mt-10">
-          <div className="p-6 sm:p-10 rounded-3xl bg-[#0a1017]/90 border border-white/15 backdrop-blur-2xl shadow-2xl">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 sm:pb-8 border-b border-white/10">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#39d353] shadow-[0_0_10px_#39d353] animate-pulse" />
-                  <h3 className="text-lg sm:text-2xl font-bold text-white font-['Space_Grotesk',sans-serif]">
-                    GitHub Contributions
-                  </h3>
-                </div>
-                <p className="text-xs sm:text-sm font-mono text-slate-400">
-                  @Jaydeep869 · Annual Open Source & Engineering Activity
-                </p>
+        {/* GitHub Contribution Graph Section using CommitsGrid */}
+        <div className="w-full mt-8 sm:mt-12 flex flex-col items-center">
+          <div className="w-full max-w-xl flex flex-col gap-4">
+            <div className="flex items-center justify-between px-1">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#39d353] shadow-[0_0_10px_#39d353] animate-pulse" />
+                <span className="text-sm sm:text-base font-bold text-white font-mono">
+                  @Jaydeep869
+                </span>
               </div>
               <a
                 href="https://github.com/Jaydeep869"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#39d353]/50 text-xs sm:text-sm font-mono text-slate-300 hover:text-white transition-all w-fit cursor-pointer group"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#39d353]/50 text-xs font-mono text-slate-300 hover:text-white transition-all cursor-pointer group"
               >
-                <span>View GitHub Profile</span>
+                <span>GitHub Profile</span>
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#39d353] transition-colors" />
               </a>
             </div>
 
-            {/* GitHub Activity SVG Graph with Vibrant GitHub Green (#39d353) */}
-            <div className="pt-8 sm:pt-10 pb-4 flex flex-col items-center justify-center overflow-x-auto [&::-webkit-scrollbar]:hidden">
-              <img
-                src="https://ghchart.rshah.org/39d353/Jaydeep869"
-                alt="Jaydeep869 GitHub Contributions"
-                className="w-full max-w-4xl min-w-[650px] opacity-95 hover:opacity-100 transition-opacity filter drop-shadow-[0_0_20px_rgba(57,211,83,0.18)]"
-                loading="lazy"
-              />
+            {/* CommitsGrid component displaying Jaydeep869 */}
+            <div className="w-full flex justify-center overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden">
+              <CommitsGrid text="Jaydeep869" />
             </div>
           </div>
         </div>
