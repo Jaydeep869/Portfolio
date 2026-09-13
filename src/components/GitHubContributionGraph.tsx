@@ -16,13 +16,14 @@ interface ContributionsData {
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAY_LABELS: (string | null)[] = [null, 'Mon', null, 'Wed', null, 'Fri', null];
 
 const LEVEL_COLORS = [
-  'bg-[#161b22] border-[#21262d]', // Level 0: Empty
-  'bg-[#0e4429] border-[#0e4429]', // Level 1
-  'bg-[#006d32] border-[#006d32]', // Level 2
-  'bg-[#26a641] border-[#26a641]', // Level 3
-  'bg-[#39d353] border-[#39d353] shadow-[0_0_8px_rgba(57,211,83,0.45)]', // Level 4
+  'bg-[#161b22] border-white/[0.04]', // Level 0
+  'bg-[#0e4429] border-[#0e4429]',    // Level 1
+  'bg-[#006d32] border-[#006d32]',    // Level 2
+  'bg-[#26a641] border-[#26a641]',    // Level 3
+  'bg-[#39d353] border-[#39d353] shadow-[0_0_8px_rgba(57,211,83,0.4)]', // Level 4
 ];
 
 const GithubLogo = () => (
@@ -44,7 +45,7 @@ export const GitHubContributionGraph: React.FC = () => {
         }
       })
       .catch(() => {
-        // Fallback gracefully to bundled verified data
+        // Fallback gracefully to local data
       });
   }, []);
 
@@ -66,8 +67,8 @@ export const GitHubContributionGraph: React.FC = () => {
     weeks.push(currentWeek);
   }
 
-  // Month labels positioning
-  const monthLabels: { weekIndex: number; name: string }[] = [];
+  // Determine which column index starts each month
+  const monthMap: { [weekIdx: number]: string } = {};
   let lastMonth = '';
 
   contributions.forEach((day, index) => {
@@ -75,8 +76,7 @@ export const GitHubContributionGraph: React.FC = () => {
     if (month !== lastMonth) {
       const weekIndex = Math.floor(index / 7);
       const dateObj = new Date(day.date + 'T12:00:00Z');
-      const monthName = MONTH_NAMES[dateObj.getUTCMonth()];
-      monthLabels.push({ weekIndex, name: monthName });
+      monthMap[weekIndex] = MONTH_NAMES[dateObj.getUTCMonth()];
       lastMonth = month;
     }
   });
@@ -93,19 +93,15 @@ export const GitHubContributionGraph: React.FC = () => {
 
   return (
     <div className="w-full max-w-[1450px] mx-auto p-6 sm:p-8 rounded-xl bg-[#0c131a]/90 border border-white/10 hover:border-white/15 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.65)] transition-all duration-300 flex flex-col">
-      {/* Header Info: Consistent Space Grotesk + Mono Fonts, Improved GitHub Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39d353] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#39d353] shadow-[0_0_8px_#39d353]" />
-          </span>
+      {/* Header Info: Clean Typography without circular dot animation, Tactile GitHub Button */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+        <div>
           <h3 className="text-xl sm:text-2xl font-bold text-white font-['Space_Grotesk',sans-serif] tracking-tight">
             {totalContributions.toLocaleString()} Contributions
           </h3>
-          <span className="text-xs font-mono text-slate-400">
-            / last year
-          </span>
+          <p className="text-xs font-mono text-slate-400 mt-0.5">
+            in the last year
+          </p>
         </div>
 
         {/* Improved Tactile GitHub Link Button */}
@@ -121,36 +117,43 @@ export const GitHubContributionGraph: React.FC = () => {
         </a>
       </div>
 
-      {/* Main Grid: Clean Rectangular Layout, Normal Scale on Hover */}
+      {/* Main Grid: Pixel-Perfect Day/Month Alignment, Normal Scale on Hover */}
       <div className="pt-6 pb-2 w-full overflow-x-auto [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb]:rounded">
         <div className="min-w-[840px] lg:min-w-full flex flex-col">
-          {/* Months Header */}
-          <div className="flex text-[11px] font-mono text-slate-400 mb-2.5 pl-8 select-none">
-            <div className="relative w-full h-4">
-              {monthLabels.map((m, idx) => (
-                <span
-                  key={idx}
-                  className="absolute"
-                  style={{
-                    left: `${(m.weekIndex / Math.max(weeks.length, 52)) * 100}%`,
-                  }}
-                >
-                  {m.name}
-                </span>
+          {/* Months Header - Perfectly synchronized with the 53 week columns */}
+          <div className="flex gap-2.5 mb-2.5">
+            {/* Spacer matching days column width exactly */}
+            <div className="w-6 sm:w-7 shrink-0" />
+
+            {/* Month labels pinned to exact week columns */}
+            <div className="flex-1 flex gap-1 sm:gap-1.5">
+              {weeks.map((_, wIdx) => (
+                <div key={wIdx} className="flex-1 relative h-4 select-none">
+                  {monthMap[wIdx] && (
+                    <span className="absolute left-0 top-0 text-[11px] font-mono text-slate-400 whitespace-nowrap">
+                      {monthMap[wIdx]}
+                    </span>
+                  )}
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Days & Weeks Grid */}
+          {/* Days Column & Weeks Grid with Exact 1:1 Row Mapping */}
           <div className="flex gap-2.5">
-            {/* Days Column */}
-            <div className="flex flex-col justify-between text-[10px] font-mono text-slate-500 select-none w-6 shrink-0 py-0.5">
-              <span>Mon</span>
-              <span>Wed</span>
-              <span>Fri</span>
+            {/* Days Column: Mon, Wed, Fri aligned pixel-for-pixel to row 1, 3, 5 */}
+            <div className="flex flex-col gap-1 sm:gap-1.5 w-6 sm:w-7 shrink-0 select-none">
+              {DAY_LABELS.map((label, idx) => (
+                <div
+                  key={idx}
+                  className="aspect-square w-full flex items-center justify-end text-[10px] font-mono text-slate-500 pr-1 leading-none"
+                >
+                  {label ?? ''}
+                </div>
+              ))}
             </div>
 
-            {/* Weeks Columns */}
+            {/* 53 Week Columns */}
             <div className="flex-1 flex gap-1 sm:gap-1.5 justify-between">
               {weeks.map((week, wIdx) => (
                 <div key={wIdx} className="flex flex-col gap-1 sm:gap-1.5 flex-1">
@@ -184,7 +187,7 @@ export const GitHubContributionGraph: React.FC = () => {
         <div className="text-slate-300">
           {hoveredDay && (
             <span className="flex items-center gap-2 text-xs">
-              <span className="w-2 h-2 rounded-full bg-[#39d353]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#39d353]" />
               <span className="text-emerald-400 font-medium">
                 {hoveredDay.count} {hoveredDay.count === 1 ? 'contribution' : 'contributions'}
               </span>
