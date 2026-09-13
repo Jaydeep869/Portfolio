@@ -127,14 +127,14 @@ export const OpenSourceSection: React.FC = () => {
         <div className="block md:hidden w-full h-[1.5px] bg-[#857b76]/60 mb-8" />
 
         {/* =========================================================================
-            CLEAN FIXED HEADER & FOOTER TABLE (Only PR Title, Merged Status & Link)
+            SEAMLESS FIXED HEADER & FOOTER TABLE (Square/Borderless, Hidden Scrollbar)
             ========================================================================= */}
         <div className="w-full bg-transparent">
-          <div className="h-[650px] sm:h-[720px] lg:h-[780px] flex flex-col rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0c1017]/90 backdrop-blur-2xl overflow-hidden shadow-2xl">
+          <div className="h-[680px] sm:h-[760px] lg:h-[820px] flex flex-col bg-black/40 overflow-hidden">
             {/* Table Header (flex-none) */}
             <div className="flex-none">
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
-                <TableHeader className="sticky top-0 z-20 bg-[#0c1017] border-b border-white/10">
+                <TableHeader className="sticky top-0 z-20 bg-black/95 backdrop-blur-md border-b border-white/10">
                   <TableRow className="border-b border-white/10 hover:bg-transparent">
                     <TableHead className="w-[78%] sm:w-[82%] py-5 px-6 sm:px-10 text-left font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">
                       Pull Request
@@ -147,35 +147,35 @@ export const OpenSourceSection: React.FC = () => {
               </Table>
             </div>
 
-            {/* Scrollable Body: data-lenis-prevent enabled for native internal scrolling */}
+            {/* Scrollable Body: Scrollbar hidden completely, native scrolling fully functional */}
             <div 
               ref={scrollBodyRef}
               data-lenis-prevent="true"
               onWheel={handleWheel}
-              className="flex-1 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
+              className="flex-1 overflow-y-auto overscroll-contain [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0 [&_td]:border-white/[0.05] [&_tr:not(:last-child)_td]:border-b">
                 <TableBody>
                   {prsList.map((pr) => (
                     <TableRow
                       key={pr.id}
-                      className="hover:bg-white/[0.04] transition-colors border-b border-white/[0.05] group"
+                      className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.05] group"
                     >
-                      {/* Pull Request Title (Spacious, Elevated Row Height) */}
-                      <TableCell className="w-[78%] sm:w-[82%] py-7 sm:py-8 px-6 sm:px-10 font-medium align-middle">
+                      {/* Pull Request Title (Elevated Up and Down Height) */}
+                      <TableCell className="w-[78%] sm:w-[82%] py-8 sm:py-10 px-6 sm:px-10 font-medium align-middle">
                         <a
                           href={pr.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[15px] sm:text-[17px] font-semibold text-white group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-relaxed block"
+                          className="text-[16px] sm:text-[18px] font-semibold text-white group-hover:text-[#9ab4c4] transition-colors font-['Space_Grotesk',sans-serif] leading-relaxed block"
                           title={pr.title}
                         >
                           {pr.title}
                         </a>
                       </TableCell>
 
-                      {/* Status & Link (Merged Badge & Dedicated Link Icon) */}
-                      <TableCell className="w-[22%] sm:w-[18%] py-7 sm:py-8 px-6 sm:px-10 text-right align-middle">
+                      {/* Status & Link (Merged Badge & External Link Icon) */}
+                      <TableCell className="w-[22%] sm:w-[18%] py-8 sm:py-10 px-6 sm:px-10 text-right align-middle">
                         <div className="flex items-center justify-end gap-3 sm:gap-4">
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium text-purple-300 bg-purple-950/60 border border-purple-500/40 shadow-sm shadow-purple-950/50 shrink-0">
                             <GitMerge className="w-3.5 h-3.5 text-purple-400" />
@@ -202,12 +202,12 @@ export const OpenSourceSection: React.FC = () => {
             {/* Table Footer (flex-none) */}
             <div className="flex-none">
               <Table containerClassName="overflow-visible" className="w-full table-fixed border-separate border-spacing-0">
-                <TableFooter className="sticky bottom-0 z-20 bg-[#0c1017] border-t border-white/10">
+                <TableFooter className="sticky bottom-0 z-20 bg-black/95 backdrop-blur-md border-t border-white/10">
                   <TableRow className="hover:bg-transparent">
-                    <TableCell className="w-[78%] sm:w-[82%] py-4 px-6 sm:px-10 text-xs font-mono text-slate-400">
+                    <TableCell className="w-[78%] sm:w-[82%] py-5 px-6 sm:px-10 text-xs font-mono text-slate-400">
                       Total Merged Contributions
                     </TableCell>
-                    <TableCell className="w-[22%] sm:w-[18%] text-right py-4 px-6 sm:px-10 text-xs font-mono text-[#9ab4c4] font-semibold">
+                    <TableCell className="w-[22%] sm:w-[18%] text-right py-5 px-6 sm:px-10 text-xs font-mono text-[#9ab4c4] font-semibold">
                       {prsList.length} Merged Pull Requests
                     </TableCell>
                   </TableRow>
