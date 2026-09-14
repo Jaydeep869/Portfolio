@@ -34,6 +34,23 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 const projects: Project[] = [
   {
+    id: "google-docs-clone",
+    title: "Google Docs Clone",
+    category: "Real Time Collaborative Document Editor",
+    description: "A full stack, real time collaborative document editor inspired by Google Docs, supporting multi user live editing.",
+    fullDetails: "A full stack, real time collaborative document editor inspired by Google Docs, supporting multi user live editing, presence and live cursors, document sharing with role based permissions, version snapshots, templates, A4 pagination, and a Drive style document dashboard. Built as a TypeScript monorepo and designed for containerized Kubernetes deployment.",
+    metrics: "Real Time Collaboration",
+    image: "/assets/projects/gdocs.png",
+    tags: ["TypeScript", "React", "WebSockets", "Yjs", "PostgreSQL", "Redis"],
+    githubUrl: "https://github.com/Jaydeep869/Google_docs_clone",
+    highlights: [
+      "Implemented real time multi user editing using Yjs CRDTs + WebSockets, with live cursors, selections, presence avatars, and conflict free synchronization.",
+      "Built a three layer permission model for viewer/commenter/editor roles across REST APIs, WebSocket connections, and the editor UI.",
+      "Designed a distributed collaboration backend using Node.js/Express, PostgreSQL, Prisma, and Redis pub/sub, with persisted Yjs document snapshots and support for horizontally scalable collaboration servers.",
+      "Built a Docs style editing experience with TipTap/ProseMirror, A4 pagination, zoom, templates, image handling, autosave, document history, sharing, folders, starring, trash, and restore workflows."
+    ]
+  },
+  {
     id: "k8s-simulator",
     title: "Kubernetes Simulator",
     category: "Interactive Kubernetes Learning Playground",
