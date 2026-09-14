@@ -523,6 +523,7 @@ export const ProjectCarousel: React.FC = () => {
                   </div>
                 </div>
               </div>
+              </div>
 
             </motion.div>
           </div>
