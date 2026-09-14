@@ -18,7 +18,6 @@ interface Project {
   metrics: string;
   image: string;
   tags: string[];
-  liveUrl: string;
   githubUrl: string;
   highlights: string[];
 }
@@ -35,88 +34,123 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 const projects: Project[] = [
   {
-    id: "hyperion-telemetry",
-    title: "Hyperion Cloud Orchestrator",
-    category: "Distributed Systems & Telemetry",
-    description: "High-throughput telemetry dashboard with bidirectional websocket streams and live node health triggers.",
-    fullDetails: "Architected an end-to-end telemetry platform providing real-time infrastructure visibility, sub-millisecond metrics aggregation, and automated failover triggers for containerized clusters.",
-    metrics: "Sub-15ms telemetry latency",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
-    tags: ["React 19", "TypeScript", "Node.js", "PostgreSQL", "Docker"],
-    liveUrl: "https://github.com/jaydeep869",
-    githubUrl: "https://github.com/jaydeep869",
+    id: "k8s-simulator",
+    title: "Kubernetes Simulator",
+    category: "Interactive Kubernetes Learning Playground",
+    description: "An interactive browser-based Kubernetes simulator that lets users experiment with kubectl-style commands.",
+    fullDetails: "An interactive browser based Kubernetes simulator that lets users experiment with kubectl style commands, manage simulated pods/deployments/containers, edit YAML manifests, and visualize cluster state in 3D. The project combines a CLI simulation engine with an interactive cluster visualizer.",
+    metrics: "Interactive 3D Cluster",
+    image: "/assets/projects/k8s_sim.png",
+    tags: ["Next.js", "React", "TypeScript", "Three.js", "Zustand"],
+    githubUrl: "https://github.com/Jaydeep869/k8s_Simulator",
     highlights: [
-      "Built resilient bidirectional websocket streams for live server node health.",
-      "Optimized time-series chart rendering for 50,000+ continuous data points.",
-      "Engineered role-based access control and token authentication."
+      "Built an in browser Kubernetes simulation engine supporting commands such as kubectl get pods, kubectl apply, Minikube node operations, and Docker container commands.",
+      "Added a real time cluster state explorer for simulated deployments, pods, and containers using centralized Zustand state management.",
+      "Developed a 3D cluster visualization using React Three Fiber and Three.js to make Kubernetes resources visually understandable.",
+      "Added an interactive YAML editor and terminal interface for experimenting with cluster configuration and commands directly in the browser."
     ]
   },
   {
-    id: "cinematic-parallax",
-    title: "Cinematic Parallax Engine",
-    category: "Creative Engineering & 3D Web",
-    description: "Physical foreground cutout masking with GSAP ScrollTrigger and Lenis smooth momentum physics.",
-    fullDetails: "An immersive multi-layer depth engine with physical foreground cutout masking, dynamic typography occlusion, and smooth GPU-accelerated scroll synchronization.",
-    metrics: "Locked 60 FPS compositor",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
-    tags: ["GSAP", "Lenis", "TypeScript", "Tailwind CSS"],
-    liveUrl: "https://github.com/jaydeep869",
-    githubUrl: "https://github.com/jaydeep869",
+    id: "sob-organizations",
+    title: "SOB Organizations",
+    category: "Open Source Organization Discovery Platform",
+    description: "A searchable and interactive platform for exploring Summer of Bitcoin organizations across multiple years.",
+    fullDetails: "A searchable and interactive platform for exploring Summer of Bitcoin organizations across multiple years, with filtering by year, technology, topics, organization history, and student projects.",
+    metrics: "2021 2025 Organizations",
+    image: "/assets/projects/sob_image.png",
+    tags: ["React", "Vite", "Material UI", "Recharts"],
+    githubUrl: "https://github.com/Jaydeep869/SOB_Organizations",
     highlights: [
-      "Engineered zero-lag scrub physics across high-refresh mobile displays.",
-      "Foreground alpha silhouette masking physically occluding towering typography.",
-      "Modular layer controller supporting arbitrary depth planes."
+      "Built organization discovery and filtering across Summer of Bitcoin participation years, technologies, topics, and first time organizations.",
+      "Created organization detail pages containing project history, graphs, and student project information.",
+      "Implemented responsive React UI with reusable components, client side routing, Material UI, animations, and Recharts based visualization.",
+      "Curated and structured a large organization dataset directly into the application for fast client side exploration."
     ]
   },
   {
-    id: "synthetix-design-system",
-    title: "Synthetix Design System",
-    category: "Component Architecture",
-    description: "Production design token architecture with automated tree-shaking and strict ARIA compliance.",
-    fullDetails: "Enterprise UI component suite with fluid dark-mode surfaces, strict TypeScript props contracts, and high-performance micro-interactions.",
-    metrics: "100+ reusable tokens",
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80",
-    tags: ["TypeScript", "Tailwind CSS", "Radix UI", "React"],
-    liveUrl: "https://github.com/jaydeep869",
-    githubUrl: "https://github.com/jaydeep869",
+    id: "isro-geonli",
+    title: "ISRO GeoNLI",
+    category: "AI Powered Geospatial Intelligence Platform",
+    description: "A multimodal geospatial AI platform with a React chat interface that lets users interact with inference models.",
+    fullDetails: "A multimodal geospatial AI platform with a React chat interface that lets users interact with inference models for geospatial understanding. The system is structured as separate frontend, backend, inference, and service layers and supports GPU based inference using locally deployed models.",
+    metrics: "GPU Powered AI",
+    image: "/assets/projects/geonli_image.png",
+    tags: ["React", "Python", "Docker", "GPU Inference", "Qwen", "SAM3"],
+    githubUrl: "https://github.com/Jaydeep869/isro_geonli",
     highlights: [
-      "Fully typed component props with automatic autocomplete and prop validation.",
-      "Zero layout shift design tokens calibrated across desktop and mobile.",
-      "Comprehensive keyboard navigation and screen-reader accessibility."
+      "Architected a multi service geospatial AI platform separating frontend, backend, inference, and supporting services for GPU backed model execution.",
+      "Built a React/Vite chat interface with authenticated routes, image upload, chat components, API service abstractions, and admin functionality.",
+      "Containerized the application and inference stack with Docker and provided automated deployment scripts for single machine and distributed GPU deployments.",
+      "Integrated local inference models including Qwen, SAM3 and BERT without relying on external inference APIs.",
+      "Watch the demo video on the GitHub repository: https://github.com/Jaydeep869/isro_geonli/blob/main/Demo.webm"
     ]
   },
   {
-    id: "nexus-cache-kv",
-    title: "Nexus High-Speed KV Engine",
-    category: "Systems & Database Engineering",
-    description: "Low-latency distributed key-value store with LSM-tree storage engine and Raft consensus.",
-    fullDetails: "Engineered an in-memory key-value cache and persistent write-ahead log system capable of processing millions of concurrent read/write queries with minimal p99 tail latency.",
-    metrics: "1.2M ops/sec throughput",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=80",
-    tags: ["C++", "Python", "Distributed Systems", "Networking"],
-    liveUrl: "https://github.com/jaydeep869",
-    githubUrl: "https://github.com/jaydeep869",
+    id: "snippet-hub",
+    title: "Snippet Hub",
+    category: "Full Stack Developer Productivity App",
+    description: "A full stack application for saving, organizing, and managing reusable code snippets with authentication.",
+    fullDetails: "A full stack application for saving, organizing, and managing reusable code snippets with authentication, persistent storage, and a responsive interface.",
+    metrics: "Full Stack App",
+    image: "/assets/projects/snippet_hub.png",
+    tags: ["React", "Vite", "Node.js", "MongoDB", "Firebase Auth"],
+    githubUrl: "https://github.com/Jaydeep869/Snippet-Hub",
     highlights: [
-      "Implemented log-structured merge-tree (LSM) engine with fast binary search index.",
-      "Raft leader election and log replication across multi-node topologies.",
-      "Comprehensive memory profiling eliminating heap fragmentation."
+      "Built a full stack code snippet management platform with persistent storage using MongoDB.",
+      "Implemented Firebase Authentication for user login and protected application access.",
+      "Developed responsive React/Vite UI for saving and organizing reusable code snippets.",
+      "Deployed the frontend on Vercel and backend API on Render."
     ]
   },
   {
-    id: "aura-ai-assistant",
-    title: "Aura Semantic Code Agent",
-    category: "AI & Developer Tooling",
-    description: "Context-aware developer CLI and AST analysis assistant for rapid refactoring and bug discovery.",
-    fullDetails: "Integrated semantic embeddings and code graph parsing into an autonomous terminal tool that analyzes multi-repo codebases, flags anti-patterns, and proposes verifiable patches.",
-    metrics: "Sub-80ms AST query time",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80",
-    tags: ["Python", "TypeScript", "Tree-sitter", "Vector DB"],
-    liveUrl: "https://github.com/jaydeep869",
-    githubUrl: "https://github.com/jaydeep869",
+    id: "prompt2site",
+    title: "Prompt2Site",
+    category: "AI Powered Website Generator",
+    description: "An AI powered application that turns natural language prompts into complete HTML/CSS/JavaScript websites.",
+    fullDetails: "An AI powered application that turns natural language prompts into complete HTML/CSS/JavaScript websites, with live preview, code inspection, project history, authentication, and downloadable project bundles.",
+    metrics: "Prompt to Website",
+    image: "/assets/projects/prompt2site.png",
+    tags: ["Vite", "Node.js", "MongoDB", "Firebase Auth", "OpenRouter"],
+    githubUrl: "https://github.com/Jaydeep869/Prompt2Site",
     highlights: [
-      "Built AST symbol extraction pipelines using Tree-sitter parsers.",
-      "Embedded code chunks into local vector indices for semantic search.",
-      "Engineered automated patch generation and test harness evaluation."
+      "Built an LLM powered generation pipeline that converts natural language prompts into functional HTML, CSS, and JavaScript websites through OpenRouter.",
+      "Implemented live code and output preview so users can inspect generated source alongside the resulting website.",
+      "Added Firebase based Google/anonymous authentication with backend token verification for protected project APIs.",
+      "Implemented project history, persistent storage in MongoDB, deletion controls, and ZIP downloads for generated sites."
+    ]
+  },
+  {
+    id: "smart-governance",
+    title: "Smart Governance Portal",
+    category: "Civic Tech & Government Services Platform",
+    description: "A digital governance portal designed around citizen services, public project visibility, and AI powered assistance.",
+    fullDetails: "A digital governance portal designed around citizen services, public project visibility, election information, government fund tracking, feedback, and AI powered assistance.",
+    metrics: "Citizen Centric Platform",
+    image: "/assets/projects/smart_governance.png",
+    tags: ["JavaScript", "Node.js", "Express", "PostgreSQL", "Botpress"],
+    githubUrl: "https://github.com/Jaydeep869/Smart-Governanace",
+    highlights: [
+      "Built a multi section civic portal covering government projects, citizen services, election information, funds, and public feedback.",
+      "Added an interactive Varanasi project map and interfaces for visualizing government initiatives.",
+      "Integrated a Botpress AI assistant for 24/7 citizen support, FAQ automation, and service navigation.",
+      "Developed an Express backend with PostgreSQL integration and structured database schema for governance data."
+    ]
+  },
+  {
+    id: "screenshot-service",
+    title: "JDScreenshotService",
+    category: "Automated Website Screenshot & PDF Service",
+    description: "A Node.js service that accepts multiple website URLs, launches automated browser sessions, and captures screenshots.",
+    fullDetails: "A Node.js service that accepts multiple website URLs, launches automated browser sessions with Puppeteer, captures full page screenshots, and combines the resulting images into a downloadable PDF.",
+    metrics: "Automated Browser Service",
+    image: "/assets/projects/screenshot_service.png",
+    tags: ["Node.js", "Express", "Puppeteer", "PDF", "Chromium"],
+    githubUrl: "https://github.com/Jaydeep869/JDScreenshotService",
+    highlights: [
+      "Built an Express API accepting batches of website URLs for automated screenshot processing.",
+      "Used Puppeteer and Puppeteer Cluster to automate Chromium based page loading and full page screenshot capture.",
+      "Implemented PDF generation from captured screenshots and exposed a download endpoint for the generated document.",
+      "Added automated cleanup of generated screenshots and temporary PDF files after processing and download."
     ]
   }
 ];
@@ -294,11 +328,11 @@ export const ProjectCarousel: React.FC = () => {
                 }`}
               >
                 {/* Image Preview - Clean & Uncluttered */}
-                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group shrink-0">
+                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-[#0c131a] border border-white/10 group shrink-0">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                    className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     draggable={false}
                   />
@@ -401,7 +435,7 @@ export const ProjectCarousel: React.FC = () => {
                 </button>
 
                 {/* Title */}
-                <h3 className="text-sm sm:text-base font-bold text-white font-['Space_Grotesk',sans-serif] tracking-tight truncate flex-1">
+                <h3 className="text-base sm:text-lg font-bold text-white font-['Space_Grotesk',sans-serif] tracking-tight leading-tight flex-1">
                   {selectedProject.title}
                 </h3>
 
@@ -420,31 +454,31 @@ export const ProjectCarousel: React.FC = () => {
 
               {/* Modal Body — Experience-section typography */}
               <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-200">
-                <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-white/10">
+                <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden bg-[#0a1017] border border-white/10 flex items-center justify-center p-2">
                   <img 
                     src={selectedProject.image} 
                     alt={selectedProject.title} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain rounded-lg"
                   />
                 </div>
 
                 {/* Description — matching Experience section font sizing */}
                 <div>
-                  <p className="text-sm sm:text-[15px] text-slate-300 leading-[1.7]">
+                  <p className="text-[15px] sm:text-base font-['Inter',sans-serif] text-slate-300 leading-relaxed font-medium">
                     {selectedProject.fullDetails}
                   </p>
                 </div>
 
                 {/* Highlights — matching Experience section bullets exactly */}
-                <div className="space-y-2">
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#a89f9a] font-semibold flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5 text-[#9ab4c4]" />
+                <div className="space-y-3">
+                  <span className="text-xs font-mono uppercase tracking-widest text-[#9ab4c4] font-bold flex items-center gap-2">
+                    <Activity className="w-4 h-4" />
                     <span>Technical Highlights</span>
                   </span>
-                  <ul className="space-y-3.5 m-0 p-0 list-none pt-1">
+                  <ul className="space-y-3 m-0 pl-1 list-none pt-1">
                     {selectedProject.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-3.5 text-sm sm:text-[15px] text-slate-200 leading-[1.7]">
-                        <span className="text-[#6a90a6] text-base mt-0.5 select-none shrink-0 font-bold">▹</span>
+                      <li key={i} className="flex items-start gap-3 text-[14px] sm:text-[15px] font-['Inter',sans-serif] text-slate-300 leading-relaxed">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#6a90a6] mt-2 shrink-0 shadow-[0_0_8px_rgba(106,144,166,0.6)]" />
                         <span>{h}</span>
                       </li>
                     ))}
