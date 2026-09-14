@@ -469,38 +469,44 @@ export const ProjectCarousel: React.FC = () => {
                 </a>
               </div>
 
-              {/* Modal Body — Experience-section typography */}
-              <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-200">
-                <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden bg-[#0a1017] border border-white/10 flex items-center justify-center p-2">
-                  <img 
-                    src={selectedProject.image} 
-                    alt={selectedProject.title} 
-                    className="w-full h-full object-contain rounded-lg"
-                  />
+              {/* Modal Body — Image (Fixed) and Text (Scrollable) */}
+              <div className="flex-1 flex flex-col overflow-hidden">
+                
+                {/* Fixed Image Area */}
+                <div className="px-6 pt-6 sm:px-8 sm:pt-8 pb-4 shrink-0">
+                  <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[220px] w-full rounded-xl overflow-hidden bg-[#0a1017] border border-white/10 flex items-center justify-center p-2">
+                    <img 
+                      src={selectedProject.image} 
+                      alt={selectedProject.title} 
+                      className="w-full h-full object-contain rounded-lg"
+                    />
+                  </div>
                 </div>
 
-                {/* Description — matching Experience section font sizing */}
-                <div>
-                  <p className="text-[15px] sm:text-base font-['Inter',sans-serif] text-slate-300 leading-relaxed font-medium">
-                    {selectedProject.fullDetails}
-                  </p>
-                </div>
+                {/* Scrollable Text Area */}
+                <div className="flex-1 overflow-y-auto px-6 sm:px-8 pb-6 sm:pb-8 space-y-6 text-slate-200 no-scrollbar">
+                  {/* Description — matching Experience section font sizing */}
+                  <div>
+                    <p className="text-[15px] sm:text-base font-['Inter',sans-serif] text-slate-300 leading-relaxed font-medium">
+                      {selectedProject.fullDetails}
+                    </p>
+                  </div>
 
-                {/* Highlights — matching Experience section bullets exactly */}
-                <div className="space-y-3">
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#9ab4c4] font-bold flex items-center gap-2">
-                    <Activity className="w-4 h-4" />
-                    <span>Technical Highlights</span>
-                  </span>
-                  <ul className="space-y-3 m-0 pl-1 list-none pt-1">
-                    {selectedProject.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-3 text-[14px] sm:text-[15px] font-['Inter',sans-serif] text-slate-300 leading-relaxed">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#6a90a6] mt-2 shrink-0 shadow-[0_0_8px_rgba(106,144,166,0.6)]" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  {/* Highlights — matching Experience section bullets exactly */}
+                  <div className="space-y-3">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[#9ab4c4] font-bold flex items-center gap-2">
+                      <Activity className="w-4 h-4" />
+                      <span>Technical Highlights</span>
+                    </span>
+                    <ul className="space-y-3 m-0 pl-1 list-none pt-1">
+                      {selectedProject.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-3 text-[14px] sm:text-[15px] font-['Inter',sans-serif] text-slate-300 leading-relaxed">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#6a90a6] mt-2 shrink-0 shadow-[0_0_8px_rgba(106,144,166,0.6)]" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                 {/* Technologies */}
                 <div className="space-y-2 pt-2 border-t border-white/10">
